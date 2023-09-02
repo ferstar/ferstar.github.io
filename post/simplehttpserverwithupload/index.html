@@ -1,0 +1,569 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>SimpleHTTPServerWithUpload | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="如题, 抄了个脚本, 偶尔从服务器上传或者下载比较用得着 出处: https://gist.github.com/touilleMan/eb02ea40b93e52604938 我的Fork: https://gist.github.com/ferstar/c620ef181c230beaf469f70451ffac9d 1 2 3 4……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/simplehttpserverwithupload/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2019-06-12T16:47:09+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/simplehttpserverwithupload/","headline":"SimpleHTTPServerWithUpload","description":"如题, 抄了个脚本, 偶尔从服务器上传或者下载比较用得着 出处: https://gist.github.com/touilleMan/eb02ea40b93e52604938 我的Fork: https://gist.github.com/ferstar/c620ef181c230beaf469f70451ffac9d 1 2 3 4……","inLanguage":"zh-CN","articleSection":"post","wordCount":1345,"image":["https://blog-1253877569.cos.ap-chengdu.myqcloud.com/blog/WechatIMG132.png"],"author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="SimpleHTTPServerWithUpload"><meta property="og:description" content="如题, 抄了个脚本, 偶尔从服务器上传或者下载比较用得着 出处: https://gist.github.com/touilleMan/eb02ea40b93e52604938 我的Fork: https://gist.github.com/ferstar/c620ef181c230beaf469f70451ffac9d 1 2 3 4……"><meta property="og:url" content="https://blog.ferstar.org/post/simplehttpserverwithupload/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog-1253877569.cos.ap-chengdu.myqcloud.com/blog/WechatIMG132.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2019-06-12T16:47:09+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">SimpleHTTPServerWithUpload</h1><div class=post-meta><time datetime=2019-06-12T16:47:09+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2019.6.12</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1345</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;3&nbsp;分钟</span></div><div class="post-body e-content"><p>如题, 抄了个脚本, 偶尔从服务器上传或者下载比较用得着</p><p>出处: <a href=https://gist.github.com/touilleMan/eb02ea40b93e52604938 target=_blank rel=noopener>https://gist.github.com/touilleMan/eb02ea40b93e52604938</a></p><p>我的Fork: <a href=https://gist.github.com/ferstar/c620ef181c230beaf469f70451ffac9d target=_blank rel=noopener>https://gist.github.com/ferstar/c620ef181c230beaf469f70451ffac9d</a></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=ch>#!/usr/bin/env python3</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;Simple HTTP Server With Upload.
+</span></span></span><span class=line><span class=cl><span class=s2>This module builds on BaseHTTPServer by implementing the standard GET
+</span></span></span><span class=line><span class=cl><span class=s2>and HEAD requests in a fairly straightforward manner.
+</span></span></span><span class=line><span class=cl><span class=s2>see: https://gist.github.com/UniIsland/3346170
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>__version__</span> <span class=o>=</span> <span class=s2>&#34;0.1&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>__all__</span> <span class=o>=</span> <span class=p>[</span><span class=s2>&#34;SimpleHTTPRequestHandler&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>__author__</span> <span class=o>=</span> <span class=s2>&#34;bones7456&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>__home_page__</span> <span class=o>=</span> <span class=s2>&#34;http://li2z.cn/&#34;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>posixpath</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>http.server</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>urllib.request</span><span class=o>,</span> <span class=nn>urllib.parse</span><span class=o>,</span> <span class=nn>urllib.error</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>cgi</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>shutil</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>mimetypes</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>io</span> <span class=kn>import</span> <span class=n>BytesIO</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>SimpleHTTPRequestHandler</span><span class=p>(</span><span class=n>http</span><span class=o>.</span><span class=n>server</span><span class=o>.</span><span class=n>BaseHTTPRequestHandler</span><span class=p>):</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Simple HTTP request handler with GET/HEAD/POST commands.
+</span></span></span><span class=line><span class=cl><span class=s2>    This serves files from the current directory and any of its
+</span></span></span><span class=line><span class=cl><span class=s2>    subdirectories.  The MIME type for files is determined by
+</span></span></span><span class=line><span class=cl><span class=s2>    calling the .guess_type() method. And can reveive file uploaded
+</span></span></span><span class=line><span class=cl><span class=s2>    by client.
+</span></span></span><span class=line><span class=cl><span class=s2>    The GET/HEAD/POST requests are identical except that the HEAD
+</span></span></span><span class=line><span class=cl><span class=s2>    request omits the actual contents of the file.
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=n>server_version</span> <span class=o>=</span> <span class=s2>&#34;SimpleHTTPWithUpload/&#34;</span> <span class=o>+</span> <span class=n>__version__</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>do_GET</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Serve a GET request.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>send_head</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>copyfile</span><span class=p>(</span><span class=n>f</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>wfile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>do_HEAD</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Serve a HEAD request.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>send_head</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>do_POST</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Serve a POST request.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>r</span><span class=p>,</span> <span class=n>info</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>deal_post_data</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>((</span><span class=n>r</span><span class=p>,</span> <span class=n>info</span><span class=p>,</span> <span class=s2>&#34;by: &#34;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>client_address</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span> <span class=o>=</span> <span class=n>BytesIO</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 3.2 Final//EN&#34;&gt;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;html&gt;</span><span class=se>\n</span><span class=s2>&lt;title&gt;Upload Result Page&lt;/title&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;body&gt;</span><span class=se>\n</span><span class=s2>&lt;h2&gt;Upload Result Page&lt;/h2&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;hr&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>r</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;strong&gt;Success:&lt;/strong&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;strong&gt;Failed:&lt;/strong&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>info</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>((</span><span class=s2>&#34;&lt;br&gt;&lt;a href=</span><span class=se>\&#34;</span><span class=si>%s</span><span class=se>\&#34;</span><span class=s2>&gt;back&lt;/a&gt;&#34;</span> <span class=o>%</span> <span class=bp>self</span><span class=o>.</span><span class=n>headers</span><span class=p>[</span><span class=s1>&#39;referer&#39;</span><span class=p>])</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;hr&gt;&lt;small&gt;Powerd By: bones7456, check new version at &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;a href=</span><span class=se>\&#34;</span><span class=s2>http://li2z.cn/?s=SimpleHTTPServerWithUpload</span><span class=se>\&#34;</span><span class=s2>&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;here&lt;/a&gt;.&lt;/small&gt;&lt;/body&gt;</span><span class=se>\n</span><span class=s2>&lt;/html&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>length</span> <span class=o>=</span> <span class=n>f</span><span class=o>.</span><span class=n>tell</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>seek</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_response</span><span class=p>(</span><span class=mi>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-type&#34;</span><span class=p>,</span> <span class=s2>&#34;text/html&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-Length&#34;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>length</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>end_headers</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>copyfile</span><span class=p>(</span><span class=n>f</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>wfile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>deal_post_data</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>content_type</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>headers</span><span class=p>[</span><span class=s1>&#39;content-type&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>content_type</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>(</span><span class=kc>False</span><span class=p>,</span> <span class=s2>&#34;Content-Type header doesn&#39;t contain boundary&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>boundary</span> <span class=o>=</span> <span class=n>content_type</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;=&#34;</span><span class=p>)[</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>encode</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>=</span> <span class=nb>int</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>headers</span><span class=p>[</span><span class=s1>&#39;content-length&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=n>line</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>boundary</span> <span class=ow>in</span> <span class=n>line</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>(</span><span class=kc>False</span><span class=p>,</span> <span class=s2>&#34;Content NOT begin with boundary&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>line</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>fn</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>findall</span><span class=p>(</span><span class=sa>r</span><span class=s1>&#39;Content-Disposition.*name=&#34;file&#34;; filename=&#34;(.*)&#34;&#39;</span><span class=p>,</span> <span class=n>line</span><span class=o>.</span><span class=n>decode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>fn</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>(</span><span class=kc>False</span><span class=p>,</span> <span class=s2>&#34;Can&#39;t find out file name...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>translate_path</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>fn</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>fn</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=n>line</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>line</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>out</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>fn</span><span class=p>,</span> <span class=s1>&#39;wb&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=ne>IOError</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=p>(</span><span class=kc>False</span><span class=p>,</span> <span class=s2>&#34;Can&#39;t create file to write, do you have permission to write?&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                
+</span></span><span class=line><span class=cl>        <span class=n>preline</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>preline</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=n>remainbytes</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>line</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>rfile</span><span class=o>.</span><span class=n>readline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>remainbytes</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>boundary</span> <span class=ow>in</span> <span class=n>line</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>preline</span> <span class=o>=</span> <span class=n>preline</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>preline</span><span class=o>.</span><span class=n>endswith</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;</span><span class=se>\r</span><span class=s1>&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                    <span class=n>preline</span> <span class=o>=</span> <span class=n>preline</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>                <span class=n>out</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>preline</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>out</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=p>(</span><span class=kc>True</span><span class=p>,</span> <span class=s2>&#34;File &#39;</span><span class=si>%s</span><span class=s2>&#39; upload success!&#34;</span> <span class=o>%</span> <span class=n>fn</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>out</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>preline</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>preline</span> <span class=o>=</span> <span class=n>line</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=p>(</span><span class=kc>False</span><span class=p>,</span> <span class=s2>&#34;Unexpect Ends of data.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>send_head</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Common code for GET and HEAD commands.
+</span></span></span><span class=line><span class=cl><span class=s2>        This sends the response code and MIME headers.
+</span></span></span><span class=line><span class=cl><span class=s2>        Return value is either a file object (which has to be copied
+</span></span></span><span class=line><span class=cl><span class=s2>        to the outputfile by the caller unless the command was HEAD,
+</span></span></span><span class=line><span class=cl><span class=s2>        and must be closed by the caller under all circumstances), or
+</span></span></span><span class=line><span class=cl><span class=s2>        None, in which case the caller has nothing further to do.
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>translate_path</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>isdir</span><span class=p>(</span><span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>endswith</span><span class=p>(</span><span class=s1>&#39;/&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=c1># redirect browser - doing basically what apache does</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>send_response</span><span class=p>(</span><span class=mi>301</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Location&#34;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>path</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>end_headers</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span> <span class=n>index</span> <span class=ow>in</span> <span class=s2>&#34;index.html&#34;</span><span class=p>,</span> <span class=s2>&#34;index.htm&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>index</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>index</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>exists</span><span class=p>(</span><span class=n>index</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                    <span class=n>path</span> <span class=o>=</span> <span class=n>index</span>
+</span></span><span class=line><span class=cl>                    <span class=k>break</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>list_directory</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>ctype</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>guess_type</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Always read in binary mode. Opening files in text mode may cause</span>
+</span></span><span class=line><span class=cl>            <span class=c1># newline translations, making the actual size of the content</span>
+</span></span><span class=line><span class=cl>            <span class=c1># transmitted *less* than the content-length!</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=s1>&#39;rb&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=ne>IOError</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>send_error</span><span class=p>(</span><span class=mi>404</span><span class=p>,</span> <span class=s2>&#34;File not found&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_response</span><span class=p>(</span><span class=mi>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-type&#34;</span><span class=p>,</span> <span class=n>ctype</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>fs</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>fstat</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>fileno</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-Length&#34;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>fs</span><span class=p>[</span><span class=mi>6</span><span class=p>]))</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Last-Modified&#34;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>date_time_string</span><span class=p>(</span><span class=n>fs</span><span class=o>.</span><span class=n>st_mtime</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>end_headers</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>f</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>list_directory</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Helper to produce a directory listing (absent index.html).
+</span></span></span><span class=line><span class=cl><span class=s2>        Return value is either a file object, or None (indicating an
+</span></span></span><span class=line><span class=cl><span class=s2>        error).  In either case, the headers are sent, making the
+</span></span></span><span class=line><span class=cl><span class=s2>        interface the same as for send_head().
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>list</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>listdir</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=n>os</span><span class=o>.</span><span class=n>error</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>send_error</span><span class=p>(</span><span class=mi>404</span><span class=p>,</span> <span class=s2>&#34;No permission to list directory&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=nb>list</span><span class=o>.</span><span class=n>sort</span><span class=p>(</span><span class=n>key</span><span class=o>=</span><span class=k>lambda</span> <span class=n>a</span><span class=p>:</span> <span class=n>a</span><span class=o>.</span><span class=n>lower</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span> <span class=o>=</span> <span class=n>BytesIO</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>displaypath</span> <span class=o>=</span> <span class=n>cgi</span><span class=o>.</span><span class=n>escape</span><span class=p>(</span><span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>unquote</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>path</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 3.2 Final//EN&#34;&gt;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>((</span><span class=s2>&#34;&lt;html&gt;</span><span class=se>\n</span><span class=s2>&lt;title&gt;Directory listing for </span><span class=si>%s</span><span class=s2>&lt;/title&gt;</span><span class=se>\n</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>displaypath</span><span class=p>)</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>((</span><span class=s2>&#34;&lt;body&gt;</span><span class=se>\n</span><span class=s2>&lt;h2&gt;Directory listing for </span><span class=si>%s</span><span class=s2>&lt;/h2&gt;</span><span class=se>\n</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>displaypath</span><span class=p>)</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;hr&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;form ENCTYPE=</span><span class=se>\&#34;</span><span class=s2>multipart/form-data</span><span class=se>\&#34;</span><span class=s2> method=</span><span class=se>\&#34;</span><span class=s2>post</span><span class=se>\&#34;</span><span class=s2>&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;input name=</span><span class=se>\&#34;</span><span class=s2>file</span><span class=se>\&#34;</span><span class=s2> type=</span><span class=se>\&#34;</span><span class=s2>file</span><span class=se>\&#34;</span><span class=s2>/&gt;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;input type=</span><span class=se>\&#34;</span><span class=s2>submit</span><span class=se>\&#34;</span><span class=s2> value=</span><span class=se>\&#34;</span><span class=s2>upload</span><span class=se>\&#34;</span><span class=s2>/&gt;&lt;/form&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;hr&gt;</span><span class=se>\n</span><span class=s2>&lt;ul&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>name</span> <span class=ow>in</span> <span class=nb>list</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>fullname</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>displayname</span> <span class=o>=</span> <span class=n>linkname</span> <span class=o>=</span> <span class=n>name</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Append / for directories or @ for symbolic links</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>isdir</span><span class=p>(</span><span class=n>fullname</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>displayname</span> <span class=o>=</span> <span class=n>name</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=n>linkname</span> <span class=o>=</span> <span class=n>name</span> <span class=o>+</span> <span class=s2>&#34;/&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>islink</span><span class=p>(</span><span class=n>fullname</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>displayname</span> <span class=o>=</span> <span class=n>name</span> <span class=o>+</span> <span class=s2>&#34;@&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=c1># Note: a link to a directory displays with @ and links with /</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>((</span><span class=s1>&#39;&lt;li&gt;&lt;a href=&#34;</span><span class=si>%s</span><span class=s1>&#34;&gt;</span><span class=si>%s</span><span class=s1>&lt;/a&gt;</span><span class=se>\n</span><span class=s1>&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>%</span> <span class=p>(</span><span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>quote</span><span class=p>(</span><span class=n>linkname</span><span class=p>),</span> <span class=n>cgi</span><span class=o>.</span><span class=n>escape</span><span class=p>(</span><span class=n>displayname</span><span class=p>)))</span><span class=o>.</span><span class=n>encode</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&lt;/ul&gt;</span><span class=se>\n</span><span class=s2>&lt;hr&gt;</span><span class=se>\n</span><span class=s2>&lt;/body&gt;</span><span class=se>\n</span><span class=s2>&lt;/html&gt;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>length</span> <span class=o>=</span> <span class=n>f</span><span class=o>.</span><span class=n>tell</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>seek</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_response</span><span class=p>(</span><span class=mi>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-type&#34;</span><span class=p>,</span> <span class=s2>&#34;text/html&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_header</span><span class=p>(</span><span class=s2>&#34;Content-Length&#34;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>length</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>end_headers</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>f</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>translate_path</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Translate a /-separated PATH to the local filename syntax.
+</span></span></span><span class=line><span class=cl><span class=s2>        Components that mean special things to the local file system
+</span></span></span><span class=line><span class=cl><span class=s2>        (e.g. drive or directory names) are ignored.  (XXX They should
+</span></span></span><span class=line><span class=cl><span class=s2>        probably be diagnosed.)
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=c1># abandon query parameters</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;?&#39;</span><span class=p>,</span><span class=mi>1</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;#&#39;</span><span class=p>,</span><span class=mi>1</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=n>posixpath</span><span class=o>.</span><span class=n>normpath</span><span class=p>(</span><span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>unquote</span><span class=p>(</span><span class=n>path</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>words</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;/&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>words</span> <span class=o>=</span> <span class=p>[</span><span class=n>_f</span> <span class=k>for</span> <span class=n>_f</span> <span class=ow>in</span> <span class=n>words</span> <span class=k>if</span> <span class=n>_f</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getcwd</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>word</span> <span class=ow>in</span> <span class=n>words</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>drive</span><span class=p>,</span> <span class=n>word</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>splitdrive</span><span class=p>(</span><span class=n>word</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>head</span><span class=p>,</span> <span class=n>word</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>word</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>word</span> <span class=ow>in</span> <span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>curdir</span><span class=p>,</span> <span class=n>os</span><span class=o>.</span><span class=n>pardir</span><span class=p>):</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>            <span class=n>path</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>path</span><span class=p>,</span> <span class=n>word</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>path</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>copyfile</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>source</span><span class=p>,</span> <span class=n>outputfile</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Copy all data between two file objects.
+</span></span></span><span class=line><span class=cl><span class=s2>        The SOURCE argument is a file object open for reading
+</span></span></span><span class=line><span class=cl><span class=s2>        (or anything with a read() method) and the DESTINATION
+</span></span></span><span class=line><span class=cl><span class=s2>        argument is a file object open for writing (or
+</span></span></span><span class=line><span class=cl><span class=s2>        anything with a write() method).
+</span></span></span><span class=line><span class=cl><span class=s2>        The only reason for overriding this would be to change
+</span></span></span><span class=line><span class=cl><span class=s2>        the block size or perhaps to replace newlines by CRLF
+</span></span></span><span class=line><span class=cl><span class=s2>        -- note however that this the default server uses this
+</span></span></span><span class=line><span class=cl><span class=s2>        to copy binary data as well.
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>shutil</span><span class=o>.</span><span class=n>copyfileobj</span><span class=p>(</span><span class=n>source</span><span class=p>,</span> <span class=n>outputfile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>guess_type</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;Guess the type of a file.
+</span></span></span><span class=line><span class=cl><span class=s2>        Argument is a PATH (a filename).
+</span></span></span><span class=line><span class=cl><span class=s2>        Return value is a string of the form type/subtype,
+</span></span></span><span class=line><span class=cl><span class=s2>        usable for a MIME Content-type header.
+</span></span></span><span class=line><span class=cl><span class=s2>        The default implementation looks the file&#39;s extension
+</span></span></span><span class=line><span class=cl><span class=s2>        up in the table self.extensions_map, using application/octet-stream
+</span></span></span><span class=line><span class=cl><span class=s2>        as a default; however it would be permissible (if
+</span></span></span><span class=line><span class=cl><span class=s2>        slow) to look inside the data to make a better guess.
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>        <span class=n>base</span><span class=p>,</span> <span class=n>ext</span> <span class=o>=</span> <span class=n>posixpath</span><span class=o>.</span><span class=n>splitext</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>ext</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>extensions_map</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>extensions_map</span><span class=p>[</span><span class=n>ext</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>ext</span> <span class=o>=</span> <span class=n>ext</span><span class=o>.</span><span class=n>lower</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>ext</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>extensions_map</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>extensions_map</span><span class=p>[</span><span class=n>ext</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>extensions_map</span><span class=p>[</span><span class=s1>&#39;&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>mimetypes</span><span class=o>.</span><span class=n>inited</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>mimetypes</span><span class=o>.</span><span class=n>init</span><span class=p>()</span> <span class=c1># try to read system mime.types</span>
+</span></span><span class=line><span class=cl>    <span class=n>extensions_map</span> <span class=o>=</span> <span class=n>mimetypes</span><span class=o>.</span><span class=n>types_map</span><span class=o>.</span><span class=n>copy</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>extensions_map</span><span class=o>.</span><span class=n>update</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;&#39;</span><span class=p>:</span> <span class=s1>&#39;application/octet-stream&#39;</span><span class=p>,</span> <span class=c1># Default</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;.py&#39;</span><span class=p>:</span> <span class=s1>&#39;text/plain&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;.c&#39;</span><span class=p>:</span> <span class=s1>&#39;text/plain&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;.h&#39;</span><span class=p>:</span> <span class=s1>&#39;text/plain&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>})</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=n>port</span><span class=p>,</span> <span class=n>server_class</span><span class=o>=</span><span class=n>http</span><span class=o>.</span><span class=n>server</span><span class=o>.</span><span class=n>HTTPServer</span><span class=p>,</span> <span class=n>handler_class</span><span class=o>=</span><span class=n>SimpleHTTPRequestHandler</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>server_address</span> <span class=o>=</span> <span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>port</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>httpd</span> <span class=o>=</span> <span class=n>server_class</span><span class=p>(</span><span class=n>server_address</span><span class=p>,</span> <span class=n>handler_class</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>httpd</span><span class=o>.</span><span class=n>serve_forever</span><span class=p>()</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>)</span> <span class=o>!=</span> <span class=mi>2</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>isdigit</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>sys</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=s1>&#39;Usage: </span><span class=si>{}</span><span class=s1> &lt;port&gt;&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>0</span><span class=p>]))</span>
+</span></span><span class=line><span class=cl>    <span class=n>run</span><span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]))</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>样子长这样, 多了个上传功能</p><p><img src=https://blog-1253877569.cos.ap-chengdu.myqcloud.com/blog/WechatIMG132.png alt=贴图></p></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/check-column-existence-pg/ class=related-link>检查某列是否在某表中</a></li><li class=related-item><a href=/post/csv-field-larger-than-field-limit/ class=related-link>_csv.Error: field larger than field limit (131072)</a></li><li class=related-item><a href=/post/upload-tmp-file-to-tmplink/ class=related-link>Upload Tmp File to Tmplink</a></li><li class=related-item><a href=/post/issue-78/ class=related-link>信创之从PostgreSQL到GaussDB</a></li><li class=related-item><a href=/post/issue-72/ class=related-link>Super in comprehension</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/python/ rel=tag class=post-tag-link>#python</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/upload-tmp-file-to-tmplink/ rel=prev>&lt; Upload Tmp File to Tmplink</a></li><li class=post-nav-next><a href=/post/kitsunebi-android/ rel=next>Kitsunebi Android 使用简介 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

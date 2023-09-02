@@ -1,0 +1,267 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>Sci-Hub Spider | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="元宵节把SciHub Spider搬到了个人订阅号上，从此无视终端随心查看文档 微信推文……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/scihub_spider/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2017-12-12T15:22:02+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/scihub_spider/","headline":"Sci-Hub Spider","description":"元宵节把SciHub Spider搬到了个人订阅号上，从此无视终端随心查看文档 微信推文……","inLanguage":"zh-CN","articleSection":"post","wordCount":2776,"image":["https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/12/3d1e449bc01bae28f85b1675bd769b7a.png"],"author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="Sci-Hub Spider"><meta property="og:description" content="元宵节把SciHub Spider搬到了个人订阅号上，从此无视终端随心查看文档 微信推文……"><meta property="og:url" content="https://blog.ferstar.org/post/scihub_spider/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/12/3d1e449bc01bae28f85b1675bd769b7a.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2017-12-12T15:22:02+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">Sci-Hub Spider</h1><div class=post-meta><time datetime=2017-12-12T15:22:02+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2017.12.12</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2776</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;6&nbsp;分钟</span></div><div class="post-body e-content"><p>元宵节把SciHub Spider搬到了个人订阅号上，从此无视终端随心查看文档</p><p>微信推文链接：<a href=https://mp.weixin.qq.com/s/RulEtKY2L0iChQEq5ZSmJQ target=_blank rel=noopener>https://mp.weixin.qq.com/s/RulEtKY2L0iChQEq5ZSmJQ</a></p><hr><h2 id=更新信息><a href=#更新信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>更新信息</h2><blockquote><p>一般只有遇到闪退bug或者scihub主站更新需要重新适配我才会更新软件，不会太频繁，一切以维护可用性为先，大家放心。</p></blockquote><blockquote><p>请注意由于SciHub网站更新，所以旧版本(1.6.2以前)都可能会无法正常解析到文献下载地址且大概率出现闪退，请更新新版。</p></blockquote><blockquote><p>软件自1.6.4开始使用自费服务提供软件更新，希望觉得好用的同学打赏一二，以cover服务器流量费用，谢谢！<a href=https://blog.ferstar.org/post/scihub_spider/#%E6%B1%82%E6%8D%90%E8%B5%A0 target=_blank rel=noopener>打赏链接</a></p></blockquote><blockquote><p>软件只要检测到更新就会自动下载更新包到桌面，大家只需双击安装即可（macOS用户解压直接可运行），不安装更新软件将无法继续使用。</p></blockquote><p>下载地址:</p><blockquote><p>又用回百度云了, 囧</p></blockquote><ol><li>Windows: <a href=https://pan.baidu.com/s/1mmVZ13eMFWrhpDPYP2SN3w target=_blank rel=noopener>SciHub-Spider-update-latest</a></li></ol><p><del>2. macOS(解压直接运行就可以): <a href=http://p2f3k7a9w.bkt.clouddn.com/mac/SciHub-Spider-update-1.6.6.zip target=_blank rel=noopener>SciHub-Spider-update-1.6.6</a></del></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>2018/08/27 1.7.1:
+</span></span><span class=line><span class=cl>1. 更新正则匹配规则以适配scihub网站更新
+</span></span><span class=line><span class=cl>2. 七牛云测试域名到期，更换MQTT服务来检测更新
+</span></span><span class=line><span class=cl>3. 正则匹配规则支持热更新
+</span></span><span class=line><span class=cl>4. 公众号增加邮件发送文献镜像下载地址功能
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/07/25 1.7.0:
+</span></span><span class=line><span class=cl>1. 修复网页重定向导致无法正常检索的问题
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/05/03 1.6.9:
+</span></span><span class=line><span class=cl>1. 更新正则匹配规则以适配scihub网站更新
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/03/27 1.6.8:
+</span></span><span class=line><span class=cl>1. 删掉几个不稳定的镜像节点
+</span></span><span class=line><span class=cl>2. 修复偶尔下载失败造成的闪退问题
+</span></span><span class=line><span class=cl>3. 移除不必要的静态资源
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/03/02 SciHub Spider WeChat Bot:
+</span></span><span class=line><span class=cl>1. 微信版闪亮登场,不再需要安装任何东西，关注即可
+</span></span><span class=line><span class=cl>https://mp.weixin.qq.com/s/RulEtKY2L0iChQEq5ZSmJQ#opennewwindow
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/02/16 1.6.7:
+</span></span><span class=line><span class=cl>1. 去掉一个被ban掉的scihub镜像检测网站
+</span></span><span class=line><span class=cl>2. 二维码求红包变为了福利链接，偷偷的别声张哈
+</span></span><span class=line><span class=cl>3. 修复下载目标内容为空时程序闪退的问题
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/01/16 1.6.6:
+</span></span><span class=line><span class=cl>1. 修复scihub抽风引起的闪退问题
+</span></span><span class=line><span class=cl>2. macOS版本继续发布
+</span></span><span class=line><span class=cl>3. 增加应用签名,Windows10安装不再报应用未知的警告了
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/01/15 1.6.5:
+</span></span><span class=line><span class=cl>1. 修复CDN缓存导致更新检测失败的问题
+</span></span><span class=line><span class=cl>2. 修复scihub网址列表为空时的报错问题
+</span></span><span class=line><span class=cl>3. 安装包增加英文引导语言,避免有些区域语言配置有问题的系统报错
+</span></span><span class=line><span class=cl>4. 验证打赏码md5值
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/01/12 1.6.4:
+</span></span><span class=line><span class=cl>1. 原网盘分享莫名被禁,故增加程序自动更新功能,弃用百度<span class=o>(</span>使用七牛云存储服务<span class=o>)</span>
+</span></span><span class=line><span class=cl>2. 如果觉得微信赞赏码烦人,可以去程序根目录把wechat.jpg图片删除即可
+</span></span><span class=line><span class=cl>3. 精力有限,不再提供免安装程序
+</span></span><span class=line><span class=cl>4. macOS版本暂缓,可能要等下周
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2018/01/11 1.6.3:
+</span></span><span class=line><span class=cl>1. 适配SciHub网站更新
+</span></span><span class=line><span class=cl>2. 增加了一个SciHub可用性检测站点
+</span></span><span class=line><span class=cl>3. 增加微信赞赏码<span class=o>(</span>更新不易,请多多支持<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/20 1.6.2:
+</span></span><span class=line><span class=cl>1. 隐去scihub可用网站信息
+</span></span><span class=line><span class=cl>2. 修复macOS模块引用的一个小bug
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/19 1.6.1:
+</span></span><span class=line><span class=cl>1. 修复文章标题包含特殊字符时程序闪退的问题
+</span></span><span class=line><span class=cl>2. 修复检测scihub站点可用性时可能引起的闪退问题
+</span></span><span class=line><span class=cl>3. 未检测到合法ID不再清空用户剪贴板内容
+</span></span><span class=line><span class=cl>4. 增加从真实下载地址解析文章标题功能,如解析到则用作保存文件名,否则使用DOI代替
+</span></span><span class=line><span class=cl>5. 延长检测可用scihub站点扫描超时时间<span class=o>(</span>应对龟速网络<span class=o>)</span>
+</span></span><span class=line><span class=cl>6. 考虑系统兼容性增加64位专版，使用优先级“*支持xp”&gt;“*免安装版不支持xp”&gt;“*64位专版免安装”，如果都有问题，请反馈留言
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/18 1.6:
+</span></span><span class=line><span class=cl>1. 新增SciHub镜像站点可用性检测
+</span></span><span class=line><span class=cl>2. 重写爬虫逻辑,提升文献下载能力
+</span></span><span class=line><span class=cl>3. 改名改图标
+</span></span><span class=line><span class=cl>4. 精简不必要的组件包,缩小安装包体积
+</span></span><span class=line><span class=cl>5. 移除微信二维码捐赠图片
+</span></span><span class=line><span class=cl>6. 提供安装板和免安装版两种选择
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/14 1.5:
+</span></span><span class=line><span class=cl>1. 兼容xp系统，完成Windows全平台支持
+</span></span><span class=line><span class=cl>2. 首版安装版
+</span></span><span class=line><span class=cl>3. 缩减程序体积
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/14 1.4:
+</span></span><span class=line><span class=cl>1. 兼容32位系统，xp依然不支持
+</span></span><span class=line><span class=cl>2. 禁止ssl验证
+</span></span><span class=line><span class=cl>3. 取消ssl禁用警告信息
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/14 1.3:
+</span></span><span class=line><span class=cl>1. 修复bug
+</span></span><span class=line><span class=cl>2. 支持Windows <span class=m>7</span> 64位
+</span></span><span class=line><span class=cl>3. 增加PMID/PMCID/Manuscript ID转换DOI支持
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/12/14 1.0-1.2:
+</span></span><span class=line><span class=cl>1. 初版，单文件，仅支持Windows10 x64位系统
+</span></span><span class=line><span class=cl>2. 修复bug
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2017/11/11:
+</span></span><span class=line><span class=cl>1. 简单脚本, 仅在朋友圈传播
+</span></span></code></pre></td></tr></table></div></div></div><hr><p>众所周知，因为版权问题，科研神器<code>SciHub</code>近来并不稳定，频繁更换域名。为了方便单位科研同学，上周用Python写了SCI文献下载器，并在朋友圈发布，反响颇佳。周末又重新理了一遍逻辑，现在论文下载能力应该是得到了进一步增强。</p><p>工具原理很简单，主要利用了爬虫技术（老司机可以直接自己撸一个也没啥问题，纯体力活）。</p><p>程序首先会检测更新，发现新版本则自动下载到桌面，需要手动安装。</p><p>接着爬取目前可用的<code>Sci-Hub</code>站点。</p><p>然后会以验证<code>http.headers</code>的方式（一般网站的headers大小仅仅几百个字节，所以并不会对服务器造成什么压力）去探测<code>Sci-Hub</code>可用站点在本地网络的连通性，保留本地确定可连的站点。</p><p>然后就开始检测用户剪贴板内容，如发现纯数字的PMID或者合法的DOI（通常以10.开头）就会自动去检索。</p><p>PMID/PMCID/Manuscript ID/DOI ID转换是通过爬取<code>NCBI</code>主站获得。也就是说如果在<code>NCBI</code>上找不到对应DOI的文章是不会下载的，这种情况就需要你自己想办法找到文章的DOI号，再尝试让程序检索下载。</p><p>拿到DOI号后即开始检索文献真实下载地址，优先从<a href=http://libgen.io target=_blank rel=noopener>libgen.io</a>爬取，爬取失败再去<code>sci-hub</code>目前可用的镜像站点爬取。所以其实这里是从两个源头去下载，libgen服务比较稳定，<code>Sci-Hub</code>相对不太稳。</p><p>爬取成功则将文章保存在用户桌面。</p><p><del>免安装版使用<a href=http://www.pyinstaller.org/ target=_blank rel=noopener>PyInstaller</a>制作，只支持Windows7以上系统。</del>(不再提供免安装版)</p><p>安装版使用<a href=https://anthony-tuininga.github.io/cx_Freeze/ target=_blank rel=noopener>cx_Freeze</a>（打包）<a href=http://www.jrsoftware.org/isinfo.php target=_blank rel=noopener>Inno Setup - JRSoftware</a>（安装）制作，支持Windows XP系统，因为少了解压过程，不会产生系统垃圾，同时打开速度比安装版要快很多，推荐使用。</p><h2 id=使用方法><a href=#使用方法 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>使用方法</h2><p>只需打开软件，复制要下载文章的PMID/PMCID/Manuscript ID/DOI等任一ID，程序可以自动从复制内容中解析出ID信息进行检索，找到文章即下载到桌面。</p><p>PS：打开软件和复制ID无先后顺序，你可以先打开软件再复制ID或者先复制ID再打开软件。</p><blockquote><p><strong>请注意，并不是所有的文章都可以下载的到！！！</strong></p><p><strong>Please note that not all papers can be downloaded successfully!!!</strong></p><p><strong>考虑到可能引起的资源滥用，暂不开源</strong></p></blockquote><h2 id=下载地址百度网盘已作废><a href=#下载地址百度网盘已作废 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>下载地址(百度网盘已作废)</h2><p><del><a href="http://p2f3k7a9w.bkt.clouddn.com/exe/SciHub-Spider-update-1.6.4.exe?v=1234" target=_blank rel=noopener>SciHub-Spider-update-1.6.4</a></del></p><p><del>链接:https://pan.baidu.com/s/1boAEC4f</del></p><p><del>密码:dz4y</del></p><h2 id=求捐赠><a href=#求捐赠 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>求捐赠</h2><p><del>PayPal: <a href=https://www.paypal.me/ferstar target=_blank rel=noopener>https://www.paypal.me/ferstar</a></del></p><p>由于使用自费服务提供软件更新，所以希望觉得好用的同学打赏一二，以cover服务器流量费用，谢谢！</p><p><img src=https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/12/3d1e449bc01bae28f85b1675bd769b7a.png alt=未命名_meitu_0></p><h2 id=程序运行信息><a href=#程序运行信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>程序运行信息：</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl> ________________
+</span></span><span class=line><span class=cl><span class=p>|</span> Sci-Hub Spider <span class=p>|</span>
+</span></span><span class=line><span class=cl> ----------------
+</span></span><span class=line><span class=cl>        <span class=se>\ </span>  ^__^
+</span></span><span class=line><span class=cl>         <span class=se>\ </span> <span class=o>(</span>oo<span class=o>)</span><span class=se>\_</span>______
+</span></span><span class=line><span class=cl>            <span class=o>(</span>__<span class=o>)</span><span class=se>\ </span>      <span class=o>)</span><span class=se>\/\-</span>
+</span></span><span class=line><span class=cl>                <span class=o>||</span>----w <span class=p>|</span>
+</span></span><span class=line><span class=cl>                <span class=o>||</span>     <span class=o>||</span>
+</span></span><span class=line><span class=cl>                written by ferstar with love
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>USAGE: copy a DOI or any content that contains a valid DOI and <span class=nb>wait</span>
+</span></span><span class=line><span class=cl>BTW:   PMID/PMCID/Manuscript ID also supported but not recommended
+</span></span><span class=line><span class=cl>       Please note that not all papers can be downloaded successfully
+</span></span><span class=line><span class=cl>BLOG:  https://blog.ferstar.org/post/scihub_spider
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Check the new version of SciHub Spider
+</span></span><span class=line><span class=cl>Already the latest version, no need to update
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Fetching available sci-hub mirrors
+</span></span><span class=line><span class=cl>Sci-Hub mirror list updated
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>I need to check <span class=k>if</span> scihub is available locally
+</span></span><span class=line><span class=cl>It may take a few seconds, please <span class=nb>wait</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>check site status <span class=s2>&#34;https://sci-hub***&#34;</span>...ok
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>ID detected: 29245169, need convert to DOI...
+</span></span><span class=line><span class=cl>DOI converted: 10.1055/s-0043-122232, fetching...
+</span></span><span class=line><span class=cl>try to fetch on <span class=s2>&#34;libgen.***&#34;</span>
+</span></span><span class=line><span class=cl>Paper found, will download
+</span></span><span class=line><span class=cl>Paper title: <span class=o>[</span>Fehler und Schwchen ...<span class=o>]</span> found
+</span></span><span class=line><span class=cl><span class=o>[</span>Fehler und Schwchen ...<span class=o>]</span> download completed 220.59 KB / 220.59 KB
+</span></span><span class=line><span class=cl><span class=o>[</span>Fehler und Schwchen ...<span class=o>]</span> has been saved on you Desktop
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Press enter key to <span class=k>continue</span> or click the close button to <span class=nb>exit</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=反馈><a href=#反馈 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>反馈</h2><p>欢迎加我微信反馈问题!</p></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/%E4%BB%8Ebitcron%E8%BF%81%E7%A7%BB%E5%88%B0hugo/ class=related-link>从Bitcron迁移到Hugo</a></li><li class=related-item><a href=/post/%E5%9C%A8markdown%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/ class=related-link>在Markdown中优雅的插入图片</a></li><li class=related-item><a href=/post/random/ class=related-link>random.org的随机数调用api</a></li><li class=related-item><a href=/post/python%E7%BB%9F%E8%AE%A1%E5%B9%B6%E7%BB%98%E5%88%B6%E9%A2%91%E7%8E%87%E5%88%86%E5%B8%83%E7%9B%B4%E6%96%B9%E5%9B%BE/ class=related-link>python统计并绘制频率分布直方图</a></li><li class=related-item><a href=/post/fix-an-anki-plugin-bugs-which-was-called-syntax-highlighting-for-code/ class=related-link>fix an anki plugin bugs which was called Syntax Highlighting for Code</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/python/ rel=tag class=post-tag-link>#python</a> <a href=/tags/scihub/ rel=tag class=post-tag-link>#scihub</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC/ rel=prev>&lt; Shell处理文件名中的空格</a></li><li class=post-nav-next><a href=/post/%E8%A7%A3%E5%86%B3windows10%E7%A7%BB%E5%8A%A8%E7%83%AD%E7%82%B9%E6%97%A0%E6%B3%95%E8%AE%BE%E7%BD%AE%E7%9A%84%E9%97%AE%E9%A2%98/ rel=next>解决Windows10移动热点无法设置的问题 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

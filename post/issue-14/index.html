@@ -1,0 +1,491 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>Tornado专题 | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="1. 断点续传/分片下载 抄这里的实现，主要应用场景就是某个接口要提供导出某某静态文件啊什……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/issue-14/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2020-01-03T13:10:40+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/issue-14/","headline":"Tornado专题","description":"1. 断点续传/分片下载 抄这里的实现，主要应用场景就是某个接口要提供导出某某静态文件啊什……","inLanguage":"zh-CN","articleSection":"post","wordCount":2584,"image":"https://blog.ferstar.org/icons/apple-touch-icon.png","author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="Tornado专题"><meta property="og:description" content="1. 断点续传/分片下载 抄这里的实现，主要应用场景就是某个接口要提供导出某某静态文件啊什……"><meta property="og:url" content="https://blog.ferstar.org/post/issue-14/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog.ferstar.org/icons/apple-touch-icon.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2020-01-03T13:10:40+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">Tornado专题</h1><div class=post-meta><time datetime=2020-01-03T13:10:40+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2020.1.3</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2584</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;6&nbsp;分钟</span></div><div class="post-body e-content"><h5 id=1-断点续传分片下载><a href=#1-断点续传分片下载 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1. 断点续传/分片下载</h5><blockquote><p>抄这里的实现，主要应用场景就是某个接口要提供导出某某静态文件啊什么的，直接把文件绝对路径传给<code>export</code>方法即可。</p></blockquote><blockquote><p><a href=https://github.com/kzahel/tornado_gen/blob/master/tornado/web.py#L1414 target=_blank rel=noopener>https://github.com/kzahel/tornado_gen/blob/master/tornado/web.py#L1414</a></p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 你肯定得有个类似`BaseHandler`的类</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>BaseHandler</span><span class=p>(</span><span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>RequestHandler</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;此处省略若干自定义初始化过程&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>pass</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>export</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>abs_path</span><span class=p>,</span> <span class=n>file_name</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>content_type</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>set_content_length</span><span class=p>(</span><span class=n>this</span><span class=p>,</span> <span class=n>path</span><span class=p>,</span> <span class=n>req_range</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>size</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>getsize</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>req_range</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>start</span><span class=p>,</span> <span class=n>end</span> <span class=o>=</span> <span class=n>req_range</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=n>start</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>start</span> <span class=o>&gt;=</span> <span class=n>size</span><span class=p>)</span> <span class=ow>or</span> <span class=n>end</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># As per RFC 2616 14.35.1, a range is not satisfiable only: if</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># the first requested byte is equal to or greater than the</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># content, or when a suffix with length 0 is specified</span>
+</span></span><span class=line><span class=cl>                    <span class=n>this</span><span class=o>.</span><span class=n>set_status</span><span class=p>(</span><span class=mi>416</span><span class=p>)</span>  <span class=c1># Range Not Satisfiable</span>
+</span></span><span class=line><span class=cl>                    <span class=n>this</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Content-Type&#34;</span><span class=p>,</span> <span class=s2>&#34;text/plain&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=n>this</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Content-Range&#34;</span><span class=p>,</span> <span class=s2>&#34;bytes */</span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>size</span><span class=p>,))</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span> <span class=n>start</span><span class=p>,</span> <span class=n>end</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>start</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>start</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>start</span> <span class=o>+=</span> <span class=n>size</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>end</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>end</span> <span class=o>&gt;</span> <span class=n>size</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># Clients sometimes blindly use a large range to limit their</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># download size; cap the endpoint at the actual file size.</span>
+</span></span><span class=line><span class=cl>                    <span class=n>end</span> <span class=o>=</span> <span class=n>size</span>
+</span></span><span class=line><span class=cl>                <span class=c1># Note: only return HTTP 206 if less than the entire range has been</span>
+</span></span><span class=line><span class=cl>                <span class=c1># requested. Not only is this semantically correct, but Chrome</span>
+</span></span><span class=line><span class=cl>                <span class=c1># refuses to play audio if it gets an HTTP 206 in response to</span>
+</span></span><span class=line><span class=cl>                <span class=c1># ``Range: bytes=0-``.</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>size</span> <span class=o>!=</span> <span class=p>(</span><span class=n>end</span> <span class=ow>or</span> <span class=n>size</span><span class=p>)</span> <span class=o>-</span> <span class=p>(</span><span class=n>start</span> <span class=ow>or</span> <span class=mi>0</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                    <span class=n>this</span><span class=o>.</span><span class=n>set_status</span><span class=p>(</span><span class=mi>206</span><span class=p>)</span>  <span class=c1># Partial Content</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># pylint: disable=protected-access</span>
+</span></span><span class=line><span class=cl>                    <span class=n>this</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Content-Range&#34;</span><span class=p>,</span> <span class=n>httputil</span><span class=o>.</span><span class=n>_get_content_range</span><span class=p>(</span><span class=n>start</span><span class=p>,</span> <span class=n>end</span><span class=p>,</span> <span class=n>size</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>start</span> <span class=o>=</span> <span class=n>end</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>start</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>end</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>length</span> <span class=o>=</span> <span class=n>end</span> <span class=o>-</span> <span class=n>start</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>end</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>length</span> <span class=o>=</span> <span class=n>end</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>start</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>length</span> <span class=o>=</span> <span class=n>size</span> <span class=o>-</span> <span class=n>start</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>length</span> <span class=o>=</span> <span class=n>size</span>
+</span></span><span class=line><span class=cl>            <span class=n>this</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Content-Length&#34;</span><span class=p>,</span> <span class=n>length</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>start</span><span class=p>,</span> <span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>get_content_type</span><span class=p>(</span><span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>mime_type</span><span class=p>,</span> <span class=n>encoding</span> <span class=o>=</span> <span class=n>mimetypes</span><span class=o>.</span><span class=n>guess_type</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=c1># per RFC 6713, use the appropriate type for a gzip compressed file</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>encoding</span> <span class=o>==</span> <span class=s2>&#34;gzip&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=s2>&#34;application/gzip&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=c1># As of 2015-07-21 there is no bzip2 encoding defined at</span>
+</span></span><span class=line><span class=cl>            <span class=c1># http://www.iana.org/assignments/media-types/media-types.xhtml</span>
+</span></span><span class=line><span class=cl>            <span class=c1># So for that (and any other encoding), use octet-stream.</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>encoding</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=s2>&#34;application/octet-stream&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>mime_type</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=n>mime_type</span>
+</span></span><span class=line><span class=cl>            <span class=c1># if mime_type not detected, use application/octet-stream</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=s2>&#34;application/octet-stream&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>get_content</span><span class=p>(</span><span class=n>abspath</span><span class=p>,</span> <span class=n>start</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>end</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>abspath</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>start</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>file</span><span class=o>.</span><span class=n>seek</span><span class=p>(</span><span class=n>start</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>end</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>remaining</span> <span class=o>=</span> <span class=n>end</span> <span class=o>-</span> <span class=p>(</span><span class=n>start</span> <span class=ow>or</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>remaining</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>                <span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>chunk_size</span> <span class=o>=</span> <span class=mi>64</span> <span class=o>*</span> <span class=mi>1024</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span> <span class=n>remaining</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>remaining</span> <span class=o>&lt;</span> <span class=n>chunk_size</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                        <span class=n>chunk_size</span> <span class=o>=</span> <span class=n>remaining</span>
+</span></span><span class=line><span class=cl>                    <span class=n>chunk</span> <span class=o>=</span> <span class=n>file</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>chunk_size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span> <span class=n>chunk</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                        <span class=k>if</span> <span class=n>remaining</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                            <span class=n>remaining</span> <span class=o>-=</span> <span class=nb>len</span><span class=p>(</span><span class=n>chunk</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=k>yield</span> <span class=n>chunk</span>
+</span></span><span class=line><span class=cl>                    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                        <span class=k>if</span> <span class=n>remaining</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                            <span class=k>assert</span> <span class=n>remaining</span> <span class=o>==</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>                        <span class=k>return</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>abs_path</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s1>&#39;Content-Type&#39;</span><span class=p>,</span> <span class=sa>f</span><span class=s1>&#39;application/</span><span class=si>{</span><span class=n>content_type</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>file_name</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>file_name</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>quote</span><span class=p>(</span><span class=n>file_name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s1>&#39;Content-Disposition&#39;</span><span class=p>,</span> <span class=sa>f</span><span class=s1>&#39;attachment; filename=</span><span class=si>{</span><span class=n>file_name</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>finish</span><span class=p>(</span><span class=n>abs_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>exists</span><span class=p>(</span><span class=n>abs_path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>raise</span> <span class=n>CustomError</span><span class=p>(</span><span class=n>_</span><span class=p>(</span><span class=s2>&#34;File not found&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>file_name</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>file_name</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=n>abs_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>file_name</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>quote</span><span class=p>(</span><span class=n>file_name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s1>&#39;Content-Disposition&#39;</span><span class=p>,</span> <span class=sa>f</span><span class=s1>&#39;attachment; filename=</span><span class=si>{</span><span class=n>file_name</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>content_type</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>content_type</span> <span class=o>=</span> <span class=n>get_content_type</span><span class=p>(</span><span class=n>abs_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Content-Type&#34;</span><span class=p>,</span> <span class=n>content_type</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Accept-Ranges&#34;</span><span class=p>,</span> <span class=s2>&#34;bytes&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Last-Modified&#34;</span><span class=p>,</span> <span class=n>datetime</span><span class=o>.</span><span class=n>datetime</span><span class=o>.</span><span class=n>utcfromtimestamp</span><span class=p>(</span><span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>getmtime</span><span class=p>(</span><span class=n>abs_path</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>request_range</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=n>range_header</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;Range&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>range_header</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># As per RFC 2616 14.16, if an invalid Range header is specified,</span>
+</span></span><span class=line><span class=cl>            <span class=c1># the request will be treated as if the header didn&#39;t exist.</span>
+</span></span><span class=line><span class=cl>            <span class=n>request_range</span> <span class=o>=</span> <span class=n>httputil</span><span class=o>.</span><span class=n>_parse_request_range</span><span class=p>(</span><span class=n>range_header</span><span class=p>)</span>  <span class=c1># pylint: disable=protected-access</span>
+</span></span><span class=line><span class=cl>        <span class=n>start</span><span class=p>,</span> <span class=n>end</span> <span class=o>=</span> <span class=n>set_content_length</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>abs_path</span><span class=p>,</span> <span class=n>request_range</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>method</span> <span class=o>==</span> <span class=s1>&#39;GET&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>content</span> <span class=o>=</span> <span class=n>get_content</span><span class=p>(</span><span class=n>abs_path</span><span class=p>,</span> <span class=n>start</span><span class=p>,</span> <span class=n>end</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>content</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>content</span> <span class=o>=</span> <span class=p>[</span><span class=n>content</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span> <span class=n>chunk</span> <span class=ow>in</span> <span class=n>content</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=bp>self</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>chunk</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>except</span> <span class=n>iostream</span><span class=o>.</span><span class=n>StreamClosedError</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>assert</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>method</span> <span class=o>==</span> <span class=s2>&#34;HEAD&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></div><h5 id=2-csrf><a href=#2-csrf class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>2. CSRF</h5><blockquote><p><a href=https://en.wikipedia.org/wiki/Cross-site_request_forgery target=_blank rel=noopener>维基传送门</a>，这里只说说咋防</p></blockquote><p>其实tornado已经有对应的<a href=https://github.com/tornadoweb/tornado/blob/master/tornado/web.py#L1489 target=_blank rel=noopener>实现</a>，
+大概就是每次请求多带一个预先分发的token，然后用浏览器cookie里的token跟这个做比对</p><p>但实际实施过程中总有些接口比如<code>/login</code>，都没登录自然拿不到派发的<code>_xsrf</code>，所以这个接口不能开<code>csrf</code>验证，再比如我们各个微服务间的通讯一般是用基于token的认证方式，这种方式是免疫<code>csrf</code>的，自然也不需要验证，基于可能的自定义需求，我们需要重写这个方法<code>check_xsrf_cookie</code></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 你肯定得有个类似`BaseHandler`的类</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>BaseHandler</span><span class=p>(</span><span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>RequestHandler</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;此处省略若干自定义初始化过程&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>pass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>check_xsrf_cookie</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>method</span> <span class=ow>in</span> <span class=p>(</span><span class=s2>&#34;GET&#34;</span><span class=p>,</span> <span class=s2>&#34;HEAD&#34;</span><span class=p>,</span> <span class=s2>&#34;OPTIONS&#34;</span><span class=p>)</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>get_config</span><span class=p>(</span><span class=s1>&#39;xsrf开关&#39;</span><span class=p>,</span> <span class=kc>False</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>route_ext</span> <span class=ow>in</span> <span class=n>get_config</span><span class=p>(</span><span class=s1>&#39;不检查的路由白名单&#39;</span><span class=p>,</span> <span class=p>[]):</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>re</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=sa>rf</span><span class=s1>&#39;不检查的路由&#39;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>logging</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=s1>&#39;Skip xsrf check: </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 可能有些系统内接口用的是token认证，那么这些接口也是不需要检查xsrf的，所以也要跳过</span>
+</span></span><span class=line><span class=cl>        <span class=n>url</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>full_url</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>query</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>urlparse</span><span class=p>(</span><span class=n>url</span><span class=p>)</span><span class=o>.</span><span class=n>query</span>
+</span></span><span class=line><span class=cl>        <span class=n>params</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>parse</span><span class=o>.</span><span class=n>parse_qs</span><span class=p>(</span><span class=n>query</span><span class=p>)</span> <span class=k>if</span> <span class=n>query</span> <span class=k>else</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nb>all</span><span class=p>([</span><span class=n>v</span> <span class=k>for</span> <span class=n>k</span><span class=p>,</span> <span class=n>v</span> <span class=ow>in</span> <span class=n>params</span><span class=o>.</span><span class=n>items</span><span class=p>()</span> <span class=k>if</span> <span class=n>k</span> <span class=ow>in</span> <span class=p>(</span><span class=s1>&#39;藏在url里的token key1&#39;</span><span class=p>,</span> <span class=s1>&#39;藏在url里的token key2&#39;</span><span class=p>)]</span> <span class=ow>or</span> <span class=p>[</span><span class=kc>None</span><span class=p>]):</span>
+</span></span><span class=line><span class=cl>            <span class=n>logging</span><span class=o>.</span><span class=n>debug</span><span class=p>(</span><span class=s1>&#39;Skip xsrf check: </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>super</span><span class=p>(</span><span class=n>BaseHandler</span><span class=p>,</span> <span class=bp>self</span><span class=p>)</span><span class=o>.</span><span class=n>check_xsrf_cookie</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>HTTPError</span> <span class=k>as</span> <span class=n>exp</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 返回一个对前端友好的错误消息提示</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>custom_error</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>exp</span><span class=o>.</span><span class=n>status_code</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>exp</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 你的Application类需要塞进去点参数</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Application</span><span class=p>(</span><span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>Application</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=o>...</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>settings</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;compiled_template_cache&#39;</span><span class=p>:</span> <span class=kc>False</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;template_path&#39;</span><span class=p>:</span> <span class=s1>&#39;templates&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;serve_traceback&#39;</span><span class=p>:</span> <span class=n>get_config</span><span class=p>(</span><span class=s1>&#39;要不要开调试&#39;</span><span class=p>,</span> <span class=kc>True</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;xsrf_cookies&#39;</span><span class=p>:</span> <span class=n>get_config</span><span class=p>(</span><span class=s1>&#39;要不要开xsrf验证&#39;</span><span class=p>,</span> <span class=kc>False</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;xsrf_cookie_kwargs&#39;</span><span class=p>:</span> <span class=nb>dict</span><span class=p>(</span><span class=n>httponly</span><span class=o>=</span><span class=kc>True</span><span class=p>),</span>  <span class=c1># _xsrf cookie 加个`httponly`的属性，这样脚本就没办法偷你的cookie了</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;cookie_secret&#34;</span><span class=p>:</span> <span class=s2>&#34;a_u_ok?&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>Application</span><span class=o>.</span><span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>handlers</span><span class=p>,</span> <span class=n>debug</span><span class=o>=</span><span class=n>get_config</span><span class=p>(</span><span class=s2>&#34;要不要开调试&#34;</span><span class=p>,</span> <span class=kc>True</span><span class=p>),</span> <span class=o>**</span><span class=n>settings</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>接下来告诉前端同学，任何<code>POST</code>，<code>DELETE</code>，<code>PUT</code>请求都带上<code>_xsrf</code>参数或者<code>X-Xsrftoken</code>请求头或者<code>X-Csrftoken</code>请求头，不要问为什么，问就甩<a href=https://github.com/tornadoweb/tornado/blob/master/tornado/web.py#L1513 target=_blank rel=noopener>源码</a></p><h5 id=3-自适应修正可能错误的-content-type-post-请求头><a href=#3-自适应修正可能错误的-content-type-post-请求头 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><del>3. 自适应修正可能错误的 Content-Type POST 请求头</del></h5><blockquote><p><del>后端N久没动的一个接口被产品吐槽出bug了，debug发现原来是前端的锅，原本这个接口要求 Content-Type 得是 multipart/form-data，然而前端某次重构后，这个 Content-Type 变成了 application/json，于是在没有经过充分回归测试的情况下，bug出现了，接口没办法正常拿到正确的参数。</del></p></blockquote><p><del>定位到问题后，解决就很简单了，要么前端抖抖小手把这个header写对，要么后端在接收 POST 请求之前把 header 改对。介于我司小厂，测试不足，所以我还是双保险，后端也对这种情况做一个兼容。</del></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>BaseHandler</span><span class=p>(</span><span class=n>tornado</span><span class=o>.</span><span class=n>web</span><span class=o>.</span><span class=n>RequestHandler</span><span class=p>,</span> <span class=n>SessionMixin</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>application</span><span class=p>,</span> <span class=n>request</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>super</span><span class=p>(</span><span class=n>BaseHandler</span><span class=p>,</span> <span class=bp>self</span><span class=p>)</span><span class=o>.</span><span class=fm>__init__</span><span class=p>(</span><span class=n>application</span><span class=p>,</span> <span class=n>request</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 一系列init方法</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>prepare</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>        Called at the beginning of a request before  `get`/`post`/etc.
+</span></span></span><span class=line><span class=cl><span class=s2>        &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>method</span> <span class=ow>in</span> <span class=p>(</span><span class=s1>&#39;POST&#39;</span><span class=p>,</span> <span class=s1>&#39;PUT&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>adapt_req_headers</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>adapt_req_headers</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;&#34;&#34;根据request body自适应修正Content-Type&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>form_data_prefix</span> <span class=o>=</span> <span class=s1>&#39;multipart/form-data;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>content_disp</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;Content-Disposition: form-data;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>www_form_prefix</span> <span class=o>=</span> <span class=s1>&#39;application/x-www-form-urlencoded&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>parse_body</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>_parse_body</span><span class=p>()</span>  <span class=c1># pylint: disable=protected-access</span>
+</span></span><span class=line><span class=cl>            <span class=n>logging</span><span class=o>.</span><span class=n>warning</span><span class=p>(</span><span class=s1>&#39;Content-Type does not match the request body, will correct it&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>body</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;Content-Type&#39;</span><span class=p>,</span> <span class=s1>&#39;&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=n>form_data_prefix</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=ow>and</span> <span class=n>content_disp</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>body</span>
+</span></span><span class=line><span class=cl>            <span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>boundary</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>body</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;</span><span class=se>\r\n</span><span class=s1>&#39;</span><span class=p>)[</span><span class=mi>0</span><span class=p>][</span><span class=mi>2</span><span class=p>:]</span><span class=o>.</span><span class=n>decode</span><span class=p>()</span> <span class=ow>or</span> <span class=s1>&#39;boundary&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=k>except</span> <span class=ne>UnicodeDecodeError</span> <span class=k>as</span> <span class=n>exp</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>logging</span><span class=o>.</span><span class=n>exception</span><span class=p>(</span><span class=n>exp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>update</span><span class=p>({</span><span class=s1>&#39;Content-Type&#39;</span><span class=p>:</span> <span class=sa>f</span><span class=s1>&#39;</span><span class=si>{</span><span class=n>form_data_prefix</span><span class=si>}</span><span class=s1> boundary=&#34;</span><span class=si>{</span><span class=n>boundary</span><span class=si>}</span><span class=s1>&#34;&#39;</span><span class=p>})</span>
+</span></span><span class=line><span class=cl>                    <span class=n>parse_body</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;Content-Type&#39;</span><span class=p>,</span> <span class=s1>&#39;&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=n>www_form_prefix</span><span class=p>)</span> <span class=ow>and</span> <span class=nb>all</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=p>[</span><span class=nb>all</span><span class=p>(</span><span class=n>i</span><span class=o>.</span><span class=n>partition</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;=&#39;</span><span class=p>))</span> <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>body</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=sa>b</span><span class=s1>&#39;&amp;&#39;</span><span class=p>)</span> <span class=k>if</span> <span class=n>content_disp</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>i</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>                <span class=ow>or</span> <span class=p>(</span><span class=kc>False</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl>            <span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>update</span><span class=p>({</span><span class=s1>&#39;Content-Type&#39;</span><span class=p>:</span> <span class=n>www_form_prefix</span><span class=p>})</span>
+</span></span><span class=line><span class=cl>                <span class=n>parse_body</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span>
+</span></span></code></pre></td></tr></table></div></div></div><h5 id=4-跨域资源共享cors><a href=#4-跨域资源共享cors class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>4. 跨域资源共享(CORS)</h5><blockquote><p>跨域资源共享(CORS) 是一种机制，它使用额外的HTTP 头来告诉浏览器 让运行在一个origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。 当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域HTTP 请求。</p></blockquote><blockquote><p>tornado 正确处理 CORS 请求的代码如下</p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>set_cors_header</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>origin</span> <span class=o>=</span> <span class=sa>f</span><span class=s1>&#39;</span><span class=si>{</span><span class=bp>self</span><span class=o>.</span><span class=n>request</span><span class=o>.</span><span class=n>headers</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;Origin&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>rstrip</span><span class=p>(</span><span class=s2>&#34;/&#34;</span><span class=p>)</span><span class=si>}</span><span class=s1>&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>trust_hosts</span> <span class=o>=</span> <span class=p>[</span><span class=o>...</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>origin</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>trust_hosts</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>logging</span><span class=o>.</span><span class=n>warning</span><span class=p>(</span><span class=sa>f</span><span class=s1>&#39;Untrusted source request detected: </span><span class=si>{</span><span class=n>origin</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=c1># NOTE: Can&#39;t be set &#34;*&#34; because a valid request always sending with cookies</span>
+</span></span><span class=line><span class=cl>        <span class=c1># which will be blocked by CORS policy</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Access-Control-Allow-Origin&#34;</span><span class=p>,</span> <span class=n>origin</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Must be set as &#34;true&#34;(case sensitive) to allow CORS with cookies</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Access-Control-Allow-Credentials&#34;</span><span class=p>,</span> <span class=s2>&#34;true&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span><span class=s2>&#34;Access-Control-Allow-Methods&#34;</span><span class=p>,</span> <span class=s2>&#34;POST, GET, PUT, DELETE, OPTIONS&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Must contain all possible request headers from frontend requests</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>set_header</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Access-Control-Allow-Headers&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Accept, Accept-Encoding, Accept-Language, Access-Control-Request-Headers, Access-Control-Request-Method, &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Cache-Control, Connection, Content-Type, &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Host, Origin, Pragma, Referer, Sec-Fetch-Mode, User-Agent, X-Csrftoken&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>参考:</p><p><a href=https://fullstackbb.com/http/options-method-and-cors-preflight/ target=_blank rel=noopener>https://fullstackbb.com/http/options-method-and-cors-preflight/</a></p><p><a href=https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS target=_blank rel=noopener>https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS</a></p><h5 id=5-under-tornado-v4-websocket-connections-get-refused-with-403><a href=#5-under-tornado-v4-websocket-connections-get-refused-with-403 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>5. Under tornado v4+ WebSocket connections get refused with 403</h5><blockquote><p><a href=https://stackoverflow.com/a/24800437 target=_blank rel=noopener>https://stackoverflow.com/a/24800437</a></p></blockquote><p>简单说就是基于安全原因, 新一点的 Tornado 版本在 ws 增加了 同源 校验</p><p>Tornado 4.0 introduced an, on by default, same origin check. This checks that the origin header set by the browser is the same as the host header</p><p>The <a href=https://github.com/tornadoweb/tornado/blob/master/tornado/websocket.py#L274 target=_blank rel=noopener>code looks like:</a></p><pre tabindex=0><code> def check_origin(self, origin):
+    &#34;&#34;&#34;Override to enable support for allowing alternate origins.
+
+    The ``origin`` argument is the value of the ``Origin`` HTTP header,
+    the url responsible for initiating this request.
+
+    .. versionadded:: 4.0
+    &#34;&#34;&#34;
+    parsed_origin = urlparse(origin)
+    origin = parsed_origin.netloc
+    origin = origin.lower()
+
+    host = self.request.headers.get(&#34;Host&#34;)
+
+    # Check to see that origin matches host directly, including ports
+    return origin == host
+</code></pre><p>In order for your proxied websocket connection to still work you will need to override check origin on the WebSocketHandler and whitelist the domains that you care about. Something like this.</p><pre tabindex=0><code>import re
+from tornado import websocket
+
+class YouConnection(websocket.WebSocketHandler):
+
+    def check_origin(self, origin):
+        return bool(re.match(r&#39;^.*?\.mydomain\.com&#39;, origin))
+</code></pre><p>This will let the connections coming through from <code>info.mydomain.com</code> to get through as before.</p><pre tabindex=0><code># NOTE: I am not responsible for any expired content.
+create@2020-01-03T13:10:40+08:00
+update@2021-11-30T04:16:11+08:00
+comment@https://github.com/ferstar/blog/issues/14
+</code></pre></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/issue-72/ class=related-link>Super in comprehension</a></li><li class=related-item><a href=/post/issue-48/ class=related-link>Tornado热重载机制下使用lru_cache一个隐藏的坑点</a></li><li class=related-item><a href=/post/issue-43/ class=related-link>关于最近项目持续重构的一点复盘</a></li><li class=related-item><a href=/post/issue-33/ class=related-link>修复Fcitx输入法文字候选框在PyCharm中无法跟随光标问题</a></li><li class=related-item><a href=/post/issue-31/ class=related-link>给SQLAlchemy declarative_base加个基类</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/python/ rel=tag class=post-tag-link>#python</a> <a href=/tags/todo/ rel=tag class=post-tag-link>#todo</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/issue-15/ rel=prev>&lt; JetBrains全家桶升级到2019.3无法使用输入法的解决方法</a></li><li class=post-nav-next><a href=/post/issue-13/ rel=next>宝宝日常 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

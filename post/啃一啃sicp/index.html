@@ -1,0 +1,728 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>啃一啃SICP | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="中文or原版? 中文翻译质量一般, 甚至有些练习题连题干都没翻译全, 所以建议慢慢啃原版 这……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/%E5%95%83%E4%B8%80%E5%95%83sicp/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2017-08-25T13:13:00+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/%E5%95%83%E4%B8%80%E5%95%83sicp/","headline":"啃一啃SICP","description":"中文or原版? 中文翻译质量一般, 甚至有些练习题连题干都没翻译全, 所以建议慢慢啃原版 这……","inLanguage":"zh-CN","articleSection":"post","wordCount":3994,"image":["https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/8/0dcfe8c59dfe42ca08ae8b2d945c9447.png","https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/8/3ef5b133b00aef6adfb60e74d7f5a73a.png","https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/jpg/2017/9/43c93eba6fcc96cc9bc9212f1b1f333a.jpg"],"author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="啃一啃SICP"><meta property="og:description" content="中文or原版? 中文翻译质量一般, 甚至有些练习题连题干都没翻译全, 所以建议慢慢啃原版 这……"><meta property="og:url" content="https://blog.ferstar.org/post/%E5%95%83%E4%B8%80%E5%95%83sicp/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/8/0dcfe8c59dfe42ca08ae8b2d945c9447.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2017-08-25T13:13:00+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">啃一啃SICP</h1><div class=post-meta><time datetime=2017-08-25T13:13:00+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2017.8.25</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;3994</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;8&nbsp;分钟</span></div><div class="post-body e-content"><h2 id=中文or原版><a href=#中文or原版 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>中文or原版?</h2><p>中文翻译质量一般, 甚至有些练习题连题干都没翻译全, 所以建议慢慢啃原版</p><p>这个网站提供制作精美的电子书版本</p><p><a href=https://sicpebook.wordpress.com/ target=_blank rel=noopener>https://sicpebook.wordpress.com/</a></p><p>我在百度云存了一份, 方便你我他</p><blockquote><p>链接: <a href=https://pan.baidu.com/s/1geUJpRH target=_blank rel=noopener>https://pan.baidu.com/s/1geUJpRH</a> 密码: ebck</p></blockquote><p><strong>How to get Scheme</strong>: via <a href=http://www.gnu.org/software/mit-scheme/ target=_blank rel=noopener>http://www.gnu.org/software/mit-scheme/</a></p><p>MIT Scheme用着不是很爽, 于是有了下面的折腾</p><h2 id=配置sublime3><a href=#配置sublime3 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>配置sublime3</h2><p>via <a href=http://www.sublimetext.com/3 target=_blank rel=noopener>http://www.sublimetext.com/3</a></p><h3 id=注册信息><a href=#注册信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>注册信息</h3><blockquote><p>v3126、v3124、v3124、v3114、 v3103可用</p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>—– BEGIN LICENSE —–
+</span></span><span class=line><span class=cl>Ryan Clark
+</span></span><span class=line><span class=cl>Single User License
+</span></span><span class=line><span class=cl>EA7E-812479
+</span></span><span class=line><span class=cl>2158A7DE B690A7A3 8EC04710 006A5EEB
+</span></span><span class=line><span class=cl>34E77CA3 9C82C81F 0DB6371B 79704E6F
+</span></span><span class=line><span class=cl>93F36655 B031503A 03257CCC 01B20F60
+</span></span><span class=line><span class=cl>D304FA8D B1B4F0AF 8A76C7BA 0FA94D55
+</span></span><span class=line><span class=cl>56D46BCE 5237A341 CD837F30 4D60772D
+</span></span><span class=line><span class=cl>349B1179 A996F826 90CDB73C 24D41245
+</span></span><span class=line><span class=cl>FD032C30 AD5E7241 4EAA66ED 167D91FB
+</span></span><span class=line><span class=cl>55896B16 EA125C81 F550AF6B A6820916
+</span></span><span class=line><span class=cl>—— END LICENSE ——
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=安装插件><a href=#安装插件 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>安装插件</h3><p>按Ctrl+`调出console，输入</p><p><code>import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())</code></p><p>重启Sublime Text 3，如果在Perferences->package settings中看到package control这一项，则安装成功。按下Ctrl+Shift+P调出命令面板输入install 调出 Install Package 选项并回车，然后在列表中选中要安装的插件。</p><h3 id=折腾scheme插件><a href=#折腾scheme插件 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>折腾Scheme插件</h3><p>via <a href=https://notechsolution.github.io/2017/01/03/How-To-Config-SublimeREPL-for-Scheme/ target=_blank rel=noopener>How To Config SublimeREPL for Scheme</a></p><ol><li>Install LISP scheme interpreter - <a href=http://people.csail.mit.edu/jaffer/SCM.html target=_blank rel=noopener>SCM</a>. there are several interpreter for scheme - DrRacket, MIT-Scheme. but SCM may be the easist one to integrate with Sublime.</li><li>Add scm bin folder into your system path. e.g.<code>set PATH = %PATH%; C:\Program Files (x86)\scm\</code></li></ol><p>then verify it using command line</p><pre tabindex=0><code>C:\Users\Administrator&gt;scm
+SCM version 5f2, Copyright (C) 1990-2006 Free Software Foundation.
+SCM comes with ABSOLUTELY NO WARRANTY; for details type (terms).
+This is free software, and you are welcome to redistribute it
+under certain conditions; type (terms) for details.
+;loading C:\Program Files (x86)\slib\require
+;done loading C:\Program Files (x86)\slib\require.scm
+;loading C:\Program Files (x86)\scm\Transcen
+;done loading C:\Program Files (x86)\scm\Transcen.scm
+</code></pre><h3 id=repl-installation-in-sublime-text-3><a href=#repl-installation-in-sublime-text-3 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>REPL installation in Sublime Text 3</h3><ol><li><p>Open the package installation of Sublime Text, if not install yet, plz try Tools -> Install Package Control</p></li><li><p>Install Package “Scheme”</p></li><li><p>Install Package “SublimeREPL”</p></li><li><p>Then, open Preferences -> Browse Packages -> SublimeREPL -> config -> Scheme -> Main.sublime-menu, edit the section with the “id”: “repl_scheme” :</p><pre tabindex=0><code>&#34;windows&#34;: [&#34;scm&#34;, &#34;-f&#34;, &#34;$file_basename&#34;]}
+</code></pre></li><li><p>Save and restart Sublime Text, choose the target file, Open Tools -> Build System, you may find “Scheme” is auto selected. if not, plz choose “Scheme”</p></li><li><p>Try build/run the file via Tools -> Build</p></li><li><p>If you meet error like <strong>“File Not Find”, [“gsi”,”-:d-“,”your-file-path”]</strong>, it may be caused that your configuration are override by Scheme package. then you may go to C:\Users\Adminstrator\AppData\Roaming\Sublime Text 3\Installed Packages, find the scheme package “Scheme.sublime-package”, unzip it and modify the startup command line in the file “Scheme.sublime-build”, change it to :</p></li></ol><pre tabindex=0><code>{
+    &#34;cmd&#34;: [&#34;scm&#34;, &#34;-f&#34;, &#34;$file&#34;],
+    &#34;file_regex&#34;: &#34;^[ ]*File \&#34;(...*?)\&#34;, line ([0-9]*)&#34;,
+    &#34;selector&#34;: &#34;source.scheme&#34;
+}
+</code></pre><h2 id=转向drracket><a href=#转向drracket class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>转向DrRacket</h2><p><a href=http://www.neilvandyke.org/racket/sicp/ target=_blank rel=noopener>SICP Support for DrRacket</a></p><p>总结起来就两步:</p><ol><li><p>下载安装DrRacket</p></li><li><h3 id=lang-planet-neilsicp><a href=#lang-planet-neilsicp class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a><code>#lang planet neil/sicp</code></h3></li></ol><p>然后就可以愉快的练习<code>SICP</code>了</p><h2 id=习题解答记录><a href=#习题解答记录 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>习题解答记录</h2><h3 id=11><a href=#11 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.1</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=mi>10</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>+</span> <span class=mi>5</span> <span class=mi>3</span> <span class=mi>4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>-</span> <span class=mi>9</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>/</span> <span class=mi>6</span> <span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nf>*</span> <span class=mi>2</span> <span class=mi>4</span><span class=p>)</span> <span class=p>(</span><span class=nf>-</span> <span class=mi>4</span> <span class=mi>6</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=nv>a</span> <span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=nv>b</span> <span class=p>(</span><span class=nf>+</span> <span class=nv>a</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>+</span> <span class=nv>a</span> <span class=nv>b</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>=</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>b</span> <span class=nv>a</span><span class=p>)</span> <span class=p>(</span><span class=nf>&lt;</span> <span class=nv>b</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl><span class=nv>b</span>
+</span></span><span class=line><span class=cl><span class=nv>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>=</span> <span class=nv>a</span> <span class=mi>4</span><span class=p>)</span> <span class=mi>6</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>((</span><span class=nf>=</span> <span class=nv>b</span> <span class=mi>4</span><span class=p>)</span> <span class=p>(</span><span class=nf>+</span> <span class=mi>6</span> <span class=mi>7</span> <span class=nv>a</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>else</span> <span class=mi>25</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>+</span> <span class=mi>2</span> <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>b</span> <span class=nv>a</span><span class=p>)</span> <span class=nv>b</span> <span class=nv>a</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>*</span> <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>&gt;</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span> <span class=nv>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>((</span><span class=nf>&lt;</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>else</span> <span class=mi>-1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nf>+</span> <span class=nv>a</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 解释器依次输入即可</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=12><a href=#12 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.2</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>+</span> <span class=mi>5</span> <span class=mi>4</span>
+</span></span><span class=line><span class=cl>         <span class=p>(</span><span class=nf>-</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>            <span class=p>(</span><span class=nf>-</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>               <span class=p>(</span><span class=nf>+</span> <span class=mi>6</span>
+</span></span><span class=line><span class=cl>                  <span class=p>(</span><span class=nf>/</span> <span class=mi>4</span> <span class=mi>5</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nf>*</span> <span class=mi>3</span> <span class=p>(</span><span class=nf>-</span> <span class=mi>6</span> <span class=mi>2</span><span class=p>)</span> <span class=p>(</span><span class=nf>-</span> <span class=mi>2</span> <span class=mi>7</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>;; -246.66666666666667e-3 or -37/150</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=13><a href=#13 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.3</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>ex1.3</span> <span class=nv>x</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nv>sum</span> <span class=p>(</span><span class=nv>sqr</span> <span class=p>(</span><span class=nf>first</span> <span class=nv>x</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>       <span class=p>(</span><span class=nv>sqr</span> <span class=p>(</span><span class=nf>second</span> <span class=nv>x</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; max No.</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>first</span> <span class=nv>x</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>x</span> <span class=nv>z</span><span class=p>))</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>y</span> <span class=nv>x</span><span class=p>)</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>))</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nv>else</span> <span class=nv>z</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; second No.</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>second</span> <span class=nv>x</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nb>or</span> <span class=p>(</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&lt;=</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>x</span> <span class=nv>z</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>             <span class=p>(</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span> <span class=p>(</span><span class=nf>&lt;=</span> <span class=nv>x</span> <span class=nv>z</span><span class=p>)))</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nb>or</span> <span class=p>(</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&lt;=</span> <span class=nv>y</span> <span class=nv>x</span><span class=p>)</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>             <span class=p>(</span><span class=nb>and</span> <span class=p>(</span><span class=nf>&gt;=</span> <span class=nv>y</span> <span class=nv>x</span><span class=p>)</span> <span class=p>(</span><span class=nf>&lt;=</span> <span class=nv>y</span> <span class=nv>z</span><span class=p>)))</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nv>else</span> <span class=nv>z</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; squares</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sqr</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>*</span> <span class=nv>x</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; sum</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sum</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>+</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>ex1.3</span> <span class=mi>3</span> <span class=mi>4</span> <span class=mi>5</span><span class=p>)</span> <span class=mi>41</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=14><a href=#14 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.4</h3><p>高阶函数的例子:</p><p>在<code>if</code>判断部分, 根据<code>b</code>的值确定返回<code>+</code>还是<code>-</code>, 当<code>b > 0</code>时返回<code>+</code>, 其余返回<code>-</code>.</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>a-plus-abs-a-b</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>((</span><span class=k>if</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>b</span> <span class=mi>0</span><span class=p>)</span> <span class=nf>+</span> <span class=nf>-</span><span class=p>)</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>a-plus-abs-a-b</span> <span class=mi>4</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>5</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>a-plus-abs-a-b</span> <span class=mi>4</span> <span class=mi>-1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>5</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>a-plus-abs-a-b</span> <span class=mi>4</span> <span class=mi>-4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>8</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=15><a href=#15 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.5</h3><ol><li>应用序: 先求值参数而后应用</li><li>正则序: 完全展开而后规约</li></ol><p><code>(define (p) (p))</code>中不论解释器使用何种求值方式, 调用<code>(p)</code>肯定进入无限循环, 函数<code>p</code>会不断调用自身</p><p>在应用序中所有被传入的实际参数都会被立即求值, 因此执行<code>(define (test x y) (if (= x 0) 0 y))</code>时, 实际参数<code>0</code>和<code>p</code>都会被立即求值, 而对<code>p</code>求值则会使采用应用序求值模式的解释器进入无限循环</p><p>不过在正则序中, 传入的实际参数只有在用到的时候才会被求值, 类似<code>Python</code>中的惰性求值, 所以运行<code>(test 0 (p)</code>时, <code>if</code>返回值为<code>#t</code>, 而这个值又作为<code>test</code>函数的值被返回, 即在正则序求值中, 调用<code>(p)</code>从始至终都没有被执行, 所以不会产生无限循环, 并且会正常返回<code>0</code>, 也就说明该解释器使用的是正则序求值模式</p><blockquote><p>形参和实参:</p><p>对于一个函数来说, 他接受的参数的局部名称被称为形式参数. 而电泳函数时传入的表达式, 被称为实际参数.</p><p>通常人们说的参数一般是指形参</p></blockquote><h3 id=117-采用牛顿法求平方根><a href=#117-采用牛顿法求平方根 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.1.7 采用牛顿法求平方根</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 绝对值计算</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>abs</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>x</span> <span class=mi>0</span><span class=p>)</span> <span class=nv>x</span> <span class=p>(</span><span class=nf>-</span> <span class=mi>0</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 平均值计算</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>average</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>+</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 取猜测值 (y x / y) / 2</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nv>average</span> <span class=nv>guess</span> <span class=p>(</span><span class=nf>/</span> <span class=nv>x</span> <span class=nv>guess</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 结果是否足够好?</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 猜测值平方后误差小于 0.001 即可认为足够好, 返回真</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>&lt;</span> <span class=p>(</span><span class=nf>abs</span> <span class=p>(</span><span class=nf>-</span> <span class=p>(</span><span class=nv>square</span> <span class=nv>guess</span><span class=p>)</span> <span class=nv>x</span><span class=p>))</span> <span class=mf>0.001</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 求平方</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>square</span> <span class=nv>x</span><span class=p>)</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>x</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 求平方根(迭代)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nv>guess</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; partial func(给定初始值为1.0)</span>
+</span></span><span class=line><span class=cl><span class=c1>;; MIT Scheme区分精确的整数和十进制数值, 两个整数的商是一个有理式而不是十进制数</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=mf>1.0</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>4.000000636692939</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>128</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>11.313708502161349</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>256</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>16.00000352670594</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=16><a href=#16 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.6</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; Alyssa的new-if定义</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>new-if</span> <span class=nv>predicate</span> <span class=nv>then-clause</span> <span class=nv>else-clause</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nb>cond</span> <span class=p>(</span><span class=nv>predicate</span> <span class=nv>then-clause</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>else</span> <span class=nv>else-clause</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 重写求平方根过程</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>new-if</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nv>guess</span>
+</span></span><span class=line><span class=cl>            <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 这里可能碰到如下错误</span>
+</span></span><span class=line><span class=cl><span class=c1>;; define-values: assignment disallowed; cannot re-define a constant constant: sqrt-iter</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 解决方法 Choose Language --&gt; uncheck Enforce constant definitions.</span>
+</span></span></code></pre></td></tr></table></div></div></div><p><img src=https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/8/0dcfe8c59dfe42ca08ae8b2d945c9447.png alt=微信截图_20170825141550></p><p>重写<code>sqrt</code>后运行会报错:</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>The evaluation thread is no longer running, so no evaluation can take place <span class=k>until</span> the next execution.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The program ran out of memory.
+</span></span></code></pre></td></tr></table></div></div></div><p>出错原因就在新定义的<code>new-if</code>函数只是一个普通函数, 根据解释器使用的应用序求值规则, 每个函数的实际参数在传入的时候都会被求值, 所以调用<code>new-if</code>函数时, 不论条件是真是假, 两个分支都会执行求值, 所以很快会突破解释器最大递归深度, 报OOM错误</p><h3 id=17><a href=#17 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.7</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 对于特别小的数, sqrt函数并不能计算出正确的答案, 对于特别大的数, sqrt会陷入死循环</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 绝对值计算</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>abs</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>x</span> <span class=mi>0</span><span class=p>)</span> <span class=nv>x</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 平均值计算</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>average</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>+</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 取猜测值 (y x / y) / 2</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nv>average</span> <span class=nv>guess</span> <span class=p>(</span><span class=nf>/</span> <span class=nv>x</span> <span class=nv>guess</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 结果是否足够好?</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 下次猜测值变化低于百分之一时认为足够好, 返回真</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>old</span> <span class=nv>new</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nf>&gt;</span> <span class=mf>0.01</span>
+</span></span><span class=line><span class=cl>       <span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>abs</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>new</span> <span class=nv>old</span><span class=p>))</span> <span class=nv>old</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 求平方</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>square</span> <span class=nv>x</span><span class=p>)</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>x</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 求平方根(迭代)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>guess</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; partial func(给定初始值为1.0)</span>
+</span></span><span class=line><span class=cl><span class=c1>;; MIT Scheme区分精确的整数和十进制数值, 两个整数的商是一个有理式而不是十进制数</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=mf>1.0</span> <span class=nv>x</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=18><a href=#18 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.8</h3><p>只需要重写<code>improve</code>函数即可</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 其中guess相当于近似值公式中的y</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nf>/</span> <span class=nv>x</span> <span class=p>(</span><span class=nv>square</span> <span class=nv>guess</span><span class=p>))</span> <span class=p>(</span><span class=nf>*</span> <span class=mi>2</span> <span class=nv>guess</span><span class=p>))</span> <span class=mi>3</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 其他判断都不需要改, sqrt已经成了求立方根的函数</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>2.000004911675504</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>27</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>3.0000005410641766</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=p>(</span><span class=nf>*</span> <span class=mi>8</span> <span class=mi>8</span> <span class=mi>8</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=mf>8.0005181503155</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=118-内部定义和块结构><a href=#118-内部定义和块结构 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.1.8 内部定义和块结构</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 过程抽象为黑盒操作</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 外部调用只关心sqrt即可</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 块结构思想</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>old</span> <span class=nv>new</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nf>&gt;</span> <span class=mf>0.01</span>
+</span></span><span class=line><span class=cl>         <span class=p>(</span><span class=nf>/</span> <span class=p>(</span><span class=nf>abs</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>new</span> <span class=nv>old</span><span class=p>))</span> <span class=nv>old</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nv>average</span> <span class=nv>guess</span> <span class=p>(</span><span class=nf>/</span> <span class=nv>x</span> <span class=nv>guess</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nv>good-enough?</span> <span class=nv>guess</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=p>(</span><span class=nv>improve</span> <span class=nv>guess</span> <span class=nv>x</span><span class=p>)</span> <span class=nv>x</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>sqrt-iter</span> <span class=mf>1.0</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nf>sqrt</span> <span class=mi>9</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mf>3.00009155413138</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=121-线性的递归和迭代><a href=#121-线性的递归和迭代 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.2.1 线性的递归和迭代</h3><blockquote><p>若这个函数在<strong>尾</strong>位置调用本身（或是一个<strong>尾</strong>调用本身的其他函数等等），则称这种情况为<strong>尾递归</strong>，是<strong>递归</strong>的一种特殊情形。 <strong>尾</strong>调用不一定是<strong>递归</strong>调用，但是<strong>尾递归</strong>特别有用，也比较容易实现。 <strong>尾</strong>调用的重要性在于它可以不在调用栈上面添加一个新的堆栈帧——而是更新它，如同迭代一般。</p><p>via <a href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwiW6Ivo8fHVAhUE2WMKHUXWDPUQFggoMAE&amp;url=https%3A%2F%2Fzh.wikipedia.org%2Fzh-hans%2F%25E5%25B0%25BE%25E8%25B0%2583%25E7%2594%25A8&amp;usg=AFQjCNF0r7nIoHwoQOH1yqSWtk-TDDSX1w" target=_blank rel=noopener>尾调用- 维基百科，自由的百科全书</a></p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 阶乘</span>
+</span></span><span class=line><span class=cl><span class=c1>;; fact(n) = n * fact(n - 1)</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 线性递归过程</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>factorial</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>x</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=mi>1</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nf>*</span> <span class=nv>x</span> <span class=p>(</span><span class=nv>factorial</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>x</span> <span class=mi>1</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 重构 1</span>
+</span></span><span class=line><span class=cl><span class=c1>;; fact(n) = 1 * 2 * 3 ... * (n - 1) * n</span>
+</span></span><span class=line><span class=cl><span class=c1>;; product &lt;-- counter * product</span>
+</span></span><span class=line><span class=cl><span class=c1>;; counter &lt;-- counter + 1</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 线性迭代过程</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>factorial</span> <span class=nv>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fact-iter</span> <span class=nv>product</span> <span class=nv>counter</span> <span class=nv>max-count</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>&gt;</span> <span class=nv>counter</span> <span class=nv>max-count</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=nv>product</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>fact-iter</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>counter</span> <span class=nv>product</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                     <span class=p>(</span><span class=nf>+</span> <span class=nv>counter</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                     <span class=nv>max-count</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>fact-iter</span> <span class=mi>1</span> <span class=mi>1</span> <span class=nv>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 重构 2</span>
+</span></span><span class=line><span class=cl><span class=c1>;; fact(n) = n * (n - 1) * ... * 3 * 2 * 1</span>
+</span></span><span class=line><span class=cl><span class=c1>;; p初始值为1, 首次迭代保存n, 第二次迭代保存n * (n - 1), 直到n = 1, 此时p即n!</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>factorial</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fact-iter</span> <span class=nv>p</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=nv>p</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>fact-iter</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>p</span> <span class=nv>n</span><span class=p>)</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>fact-iter</span> <span class=mi>1</span> <span class=nv>n</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=19><a href=#19 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.9</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 线性递归过程</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>plus</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>a</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nv>b</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>plus</span> <span class=p>(</span><span class=nv>dec</span> <span class=nv>a</span><span class=p>)</span> <span class=nv>b</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>4</span> <span class=mi>5</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>3</span> <span class=mi>5</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>2</span> <span class=mi>5</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>1</span> <span class=mi>5</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>0</span> <span class=mi>5</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=mi>5</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=mi>6</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=p>(</span><span class=nv>inc</span> <span class=mi>7</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>inc</span> <span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>9</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 从计算过程明显可以看到伸展和收缩两个阶段, 且伸展阶段所需要的额外存储量和计算所需的步数都与参数a正相关</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 是一个线性递归计算过程(recursive)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 线性迭代过程</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>plus</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>a</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nv>b</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nv>plus</span> <span class=p>(</span><span class=nv>dec</span> <span class=nv>a</span><span class=p>)</span> <span class=p>(</span><span class=nv>inc</span> <span class=nv>b</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>plus</span> <span class=mi>4</span> <span class=mi>5</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>plus</span> <span class=mi>3</span> <span class=mi>6</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>plus</span> <span class=mi>2</span> <span class=mi>7</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>plus</span> <span class=mi>1</span> <span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>plus</span> <span class=mi>0</span> <span class=mi>9</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>9</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 计算过程仅适用敞亮存储空间, 且计算步骤与参数a正相关, 说明是一个线性迭代计算过程(iterative)</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=110><a href=#110 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.10</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>A</span> <span class=nv>x</span> <span class=nv>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>=</span> <span class=nv>y</span> <span class=mi>0</span><span class=p>)</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>x</span> <span class=mi>0</span><span class=p>)</span> <span class=p>(</span><span class=nf>*</span> <span class=mi>2</span> <span class=nv>y</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>y</span> <span class=mi>1</span><span class=p>)</span> <span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>else</span> <span class=p>(</span><span class=nv>A</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>x</span> <span class=mi>1</span><span class=p>)</span> <span class=p>(</span><span class=nv>A</span> <span class=nv>x</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>y</span> <span class=mi>1</span><span class=p>))))))</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>见 <a href=http://sicp.readthedocs.io/en/latest/chp1/10.html target=_blank rel=noopener>http://sicp.readthedocs.io/en/latest/chp1/10.html</a></p><h3 id=122-树形递归><a href=#122-树形递归 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.2.2 树形递归</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 斐波那契数列</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 树形递归</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fib</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>0</span><span class=p>)</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>)</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>else</span> <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nv>fib</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                   <span class=p>(</span><span class=nv>fib</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>2</span><span class=p>))))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 线性迭代</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fib</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>fib-iter</span> <span class=nv>a</span> <span class=nv>b</span> <span class=nf>count</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>=</span> <span class=nf>count</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=nv>a</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>fib-iter</span> <span class=p>(</span><span class=nf>+</span> <span class=nv>a</span> <span class=nv>b</span><span class=p>)</span> <span class=nv>a</span> <span class=p>(</span><span class=nf>-</span> <span class=nf>count</span> <span class=mi>1</span><span class=p>))))</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nv>fib-iter</span> <span class=mi>0</span> <span class=mi>1</span> <span class=nv>n</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=换零钱方式的统计><a href=#换零钱方式的统计 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>换零钱方式的统计</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 兑换零钱方法</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>count-change</span> <span class=nv>amount</span><span class=p>)</span> <span class=p>(</span><span class=nv>cc</span> <span class=nv>amount</span> <span class=mi>5</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 可用的硬币种数作为输入, 返回第一种硬币币值(从大到小排列)</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>first-denomination</span> <span class=nv>kinds-of-coins</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>1</span><span class=p>)</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>2</span><span class=p>)</span> <span class=mi>5</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>3</span><span class=p>)</span> <span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>4</span><span class=p>)</span> <span class=mi>25</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>5</span><span class=p>)</span> <span class=mi>50</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 计算</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>cc</span> <span class=nv>amount</span> <span class=nv>kinds-of-coins</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>=</span> <span class=nv>amount</span> <span class=mi>0</span><span class=p>)</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>((</span><span class=nb>or</span> <span class=p>(</span><span class=nf>&lt;</span> <span class=nv>amount</span> <span class=mi>0</span><span class=p>)</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>kinds-of-coins</span> <span class=mi>0</span><span class=p>))</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=nv>else</span> <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nv>cc</span> <span class=nv>amount</span>
+</span></span><span class=line><span class=cl>                     <span class=p>(</span><span class=nf>-</span> <span class=nv>kinds-of-coins</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                 <span class=p>(</span><span class=nv>cc</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>amount</span>
+</span></span><span class=line><span class=cl>                        <span class=p>(</span><span class=nv>first-denomination</span> <span class=nv>kinds-of-coins</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                     <span class=nv>kinds-of-coins</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>count-change</span> <span class=mi>100</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>292</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=111><a href=#111 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.11</h3><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=c1>;; 线性递归</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>f</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=k>if</span> <span class=p>(</span><span class=nf>&lt;</span> <span class=nv>n</span> <span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=nv>n</span>
+</span></span><span class=line><span class=cl>      <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nv>f</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>         <span class=p>(</span><span class=nv>f</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>         <span class=p>(</span><span class=nv>f</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>3</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; 线性迭代</span>
+</span></span><span class=line><span class=cl><span class=c1>;; 初始条件: f(0) = 0, f(1) = 1, f(2) = 2</span>
+</span></span><span class=line><span class=cl><span class=c1>;; i = (n - 1): f(n - 3) = a, f(n - 2) = b, f(n - 1) = c</span>
+</span></span><span class=line><span class=cl><span class=c1>;; i = n:       f(n - 2) = b, f(n - 1) = c, f(n) = 3a + 2b + c</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>f</span> <span class=nv>n</span><span class=p>)</span> <span class=p>(</span><span class=nv>f-iter</span> <span class=mi>0</span> <span class=mi>1</span> <span class=mi>2</span> <span class=nv>n</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>f-iter</span> <span class=nv>a</span> <span class=nv>b</span> <span class=nv>c</span> <span class=nv>n</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>&lt;</span> <span class=nv>n</span> <span class=mi>0</span><span class=p>)</span> <span class=nv>n</span><span class=p>)</span>  <span class=c1>; 负数</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>0</span><span class=p>)</span> <span class=nv>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>)</span> <span class=nv>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nf>=</span> <span class=nv>n</span> <span class=mi>2</span><span class=p>)</span> <span class=nv>c</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>else</span> <span class=p>(</span><span class=nv>f-iter</span> <span class=nv>b</span>
+</span></span><span class=line><span class=cl>                        <span class=nv>c</span>
+</span></span><span class=line><span class=cl>                        <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>a</span> <span class=mi>3</span><span class=p>)</span> <span class=p>(</span><span class=nf>*</span> <span class=nv>b</span> <span class=mi>2</span><span class=p>)</span> <span class=nv>c</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                        <span class=p>(</span><span class=nf>-</span> <span class=nv>n</span> <span class=mi>1</span><span class=p>)))))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>;; test</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>-1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>-1</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>0</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=mi>4</span>
+</span></span><span class=line><span class=cl><span class=nf>&gt;</span> <span class=p>(</span><span class=nv>f</span> <span class=mi>100</span><span class=p>)</span>  <span class=c1>; 线性递归会卡死</span>
+</span></span><span class=line><span class=cl><span class=mi>11937765839880230562825561449279733086</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=112-帕斯卡三角形><a href=#112-帕斯卡三角形 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.12 帕斯卡三角形</h3><p>中文版翻译有误, 应该是给出帕斯卡三角形任意元素的计算方法</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>row:
+</span></span><span class=line><span class=cl><span class=m>0</span>        <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=m>1</span>       <span class=m>1</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=m>2</span>      <span class=m>1</span> <span class=m>2</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=m>3</span>     <span class=m>1</span> <span class=m>3</span> <span class=m>3</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=m>4</span>    <span class=m>1</span> <span class=m>4</span> <span class=m>6</span> <span class=m>4</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=m>5</span>   . . . . . .
+</span></span><span class=line><span class=cl>col: <span class=m>0</span> <span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>如果使用p(r, c)来代表r行c列上元素的值, 可以得出三个性质:</p><ol><li>p(r, c) = p(r - 1, c - 1) + p(r -1, c) 即每个元素的值都由左上和右上元素的和组成</li><li>p(r, 0) or p(x, x) = 1 即最左边元素(c = 0)或最右边元素(r = c)值为1</li><li>列数不能多于行数</li></ol><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lisp data-lang=lisp><span class=line><span class=cl><span class=p>(</span><span class=nv>define</span> <span class=p>(</span><span class=nv>pascal</span> <span class=nv>row</span> <span class=nv>col</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=nb>cond</span> <span class=p>((</span><span class=nf>&lt;</span> <span class=nv>row</span> <span class=nv>col</span><span class=p>)</span> <span class=p>(</span><span class=nv>display</span> <span class=s>&#34;invalid row col values&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>          <span class=p>((</span><span class=nb>or</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>col</span> <span class=mi>0</span><span class=p>)</span> <span class=p>(</span><span class=nf>=</span> <span class=nv>row</span> <span class=nv>col</span><span class=p>))</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>(</span><span class=nv>else</span> <span class=p>(</span><span class=nf>+</span> <span class=p>(</span><span class=nv>pascal</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>row</span> <span class=mi>1</span><span class=p>)</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>col</span> <span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                   <span class=p>(</span><span class=nv>pascal</span> <span class=p>(</span><span class=nf>-</span> <span class=nv>row</span> <span class=mi>1</span><span class=p>)</span> <span class=nv>col</span><span class=p>)))))</span>
+</span></span></code></pre></td></tr></table></div></div></div><h3 id=113-原题翻译有误-需要看英文原版><a href=#113-原题翻译有误-需要看英文原版 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.13 原题翻译有误, 需要看英文原版</h3><p><img src=https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/png/2017/8/3ef5b133b00aef6adfb60e74d7f5a73a.png alt=微信截图_20170827172527></p><p>这个原题翻译有问题, 需要看英文原版</p><h3 id=114-增长的阶><a href=#114-增长的阶 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1.14 增长的阶</h3><blockquote><p>绘制(count-change 11)在展开时的过程, 只手撸了部分...</p></blockquote><p><img src=https://blog-1253877569.cos.ap-chengdu.myqcloud.com/ext/jpg/2017/9/43c93eba6fcc96cc9bc9212f1b1f333a.jpg alt=微信图片_20170905114253></p></div></article><footer class=minimal-footer><div class=post-tag><a href=/tags/sicp/ rel=tag class=post-tag-link>#sicp</a> <a href=/tags/lisp/ rel=tag class=post-tag-link>#lisp</a> <a href=/tags/scheme/ rel=tag class=post-tag-link>#scheme</a> <a href=/tags/sublime/ rel=tag class=post-tag-link>#sublime</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/ssr%E8%A2%AB%E6%81%B6%E6%84%8F%E6%89%AB%E6%8F%8F%E6%97%B6%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85/ rel=prev>&lt; SSR被恶意扫描时需要做的事情</a></li><li class=post-nav-next><a href=/post/%E5%9C%A8markdown%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/ rel=next>在Markdown中优雅的插入图片 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

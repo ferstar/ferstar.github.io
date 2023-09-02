@@ -1,0 +1,224 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>Hacking Kankun Smart Wifi Plug | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="闲鱼买了两kk-sp3插座，准备搭配shairport-sync把吃灰的有线音箱用起……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/hacking-kankun-smart-wifi-plug/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2017-06-20T11:13:00+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/hacking-kankun-smart-wifi-plug/","headline":"Hacking Kankun Smart Wifi Plug","description":"闲鱼买了两kk-sp3插座，准备搭配shairport-sync把吃灰的有线音箱用起……","inLanguage":"zh-CN","articleSection":"post","wordCount":926,"image":"https://blog.ferstar.org/icons/apple-touch-icon.png","author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="Hacking Kankun Smart Wifi Plug"><meta property="og:description" content="闲鱼买了两kk-sp3插座，准备搭配shairport-sync把吃灰的有线音箱用起……"><meta property="og:url" content="https://blog.ferstar.org/post/hacking-kankun-smart-wifi-plug/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog.ferstar.org/icons/apple-touch-icon.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2017-06-20T11:13:00+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">Hacking Kankun Smart Wifi Plug</h1><div class=post-meta><time datetime=2017-06-20T11:13:00+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2017.6.20</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;926</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;2&nbsp;分钟</span></div><div class="post-body e-content"><p>闲鱼买了两kk-sp3插座，准备搭配<code>shairport-sync</code>把吃灰的有线音箱用起来</p><p>hack link：<a href=http://www.anites.com/2015/01/hacking-kankun-smart-wifi-plug.html target=_blank rel=noopener>http://www.anites.com/2015/01/hacking-kankun-smart-wifi-plug.html</a>
+ssid：0K_SP3
+管理IP：192.168.10.253
+先telnet进去修改密码（telnet默认密码为空）</p><h2 id=磁盘信息><a href=#磁盘信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>磁盘信息：</h2><pre tabindex=0><code>root@OpenWrt:~# df -h
+Filesystem                Size      Used Available Use% Mounted on
+rootfs                    1.0M    296.0K    728.0K  29% /
+/dev/root                 2.0M      2.0M         0 100% /rom
+tmpfs                    14.2M     60.0K     14.1M   0% /tmp
+/dev/mtdblock3            1.0M    296.0K    728.0K  29% /overlay
+overlayfs:/overlay        1.0M    296.0K    728.0K  29% /
+tmpfs                   512.0K         0    512.0K   0% /dev
+</code></pre><h2 id=内存信息><a href=#内存信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>内存信息：</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>root@OpenWrt:~# free
+</span></span><span class=line><span class=cl>			total         used         free       shared      buffers
+</span></span><span class=line><span class=cl>Mem:         <span class=m>29060</span>        <span class=m>20224</span>         <span class=m>8836</span>            <span class=m>0</span>         <span class=m>1736</span>
+</span></span><span class=line><span class=cl>-/+ buffers:              <span class=m>18488</span>        <span class=m>10572</span>
+</span></span><span class=line><span class=cl>Swap:            <span class=m>0</span>            <span class=m>0</span>            <span class=m>0</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=cpu信息><a href=#cpu信息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>CPU信息：</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>root@OpenWrt:~# cat /proc/cpuinfo 
+</span></span><span class=line><span class=cl>system <span class=nb>type</span>                : Atheros AR9330 rev <span class=m>1</span>
+</span></span><span class=line><span class=cl>machine                        : TP-LINK TL-WR703N v1
+</span></span><span class=line><span class=cl>processor                : <span class=m>0</span>
+</span></span><span class=line><span class=cl>cpu model                : MIPS 24Kc V7.4
+</span></span><span class=line><span class=cl>BogoMIPS                : 265.42
+</span></span><span class=line><span class=cl><span class=nb>wait</span> instruction        : yes
+</span></span><span class=line><span class=cl>microsecond timers        : yes
+</span></span><span class=line><span class=cl>tlb_entries                : <span class=m>16</span>
+</span></span><span class=line><span class=cl>extra interrupt vector        : yes
+</span></span><span class=line><span class=cl>hardware watchpoint        : yes, count: 4, address/irw mask: <span class=o>[</span>0x0000, 0x0ff8, 0x0ff8, 0x0ff8<span class=o>]</span>
+</span></span><span class=line><span class=cl>isa                        : mips1 mips2 mips32r1 mips32r2
+</span></span><span class=line><span class=cl>ASEs implemented        : mips16
+</span></span><span class=line><span class=cl>shadow register sets        : <span class=m>1</span>
+</span></span><span class=line><span class=cl>kscratch registers        : <span class=m>0</span>
+</span></span><span class=line><span class=cl>core                        : <span class=m>0</span>
+</span></span><span class=line><span class=cl>VCED exceptions                : not available
+</span></span><span class=line><span class=cl>VCEI exceptions                : not available
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=开关><a href=#开关 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>开关：</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>turn relay on 
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=m>1</span> &gt; /sys/class/leds/tp-link:blue:relay/brightness  
+</span></span><span class=line><span class=cl>turn relay off 
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=m>0</span> &gt; /sys/class/leds/tp-link:blue:relay/brightness
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=网络配置><a href=#网络配置 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>网络配置</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>root@OpenWrt:~# vi /etc/config/wireless
+</span></span><span class=line><span class=cl>config wifi-device <span class=s1>&#39;radio0&#39;</span>
+</span></span><span class=line><span class=cl>        option <span class=nb>type</span> <span class=s1>&#39;mac80211&#39;</span>
+</span></span><span class=line><span class=cl>        option channel <span class=s1>&#39;11&#39;</span>
+</span></span><span class=line><span class=cl>        option hwmode <span class=s1>&#39;11ng&#39;</span>
+</span></span><span class=line><span class=cl>        option path <span class=s1>&#39;platform/ar933x_wmac&#39;</span>
+</span></span><span class=line><span class=cl>        option htmode <span class=s1>&#39;HT20&#39;</span>
+</span></span><span class=line><span class=cl>        list ht_capab <span class=s1>&#39;SHORT-GI-20&#39;</span>
+</span></span><span class=line><span class=cl>        list ht_capab <span class=s1>&#39;SHORT-GI-40&#39;</span>
+</span></span><span class=line><span class=cl>        list ht_capab <span class=s1>&#39;RX-STBC1&#39;</span>
+</span></span><span class=line><span class=cl>        list ht_capab <span class=s1>&#39;DSSS_CCK-40&#39;</span>
+</span></span><span class=line><span class=cl>        option disabled <span class=s1>&#39;0&#39;</span>
+</span></span><span class=line><span class=cl>        option noscan <span class=s1>&#39;1&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>config wifi-iface
+</span></span><span class=line><span class=cl>        option device <span class=s1>&#39;radio0&#39;</span>
+</span></span><span class=line><span class=cl>        option mode <span class=s1>&#39;sta&#39;</span>
+</span></span><span class=line><span class=cl>        option ssid <span class=s1>&#39;your ssid&#39;</span>
+</span></span><span class=line><span class=cl>        option encryption <span class=s1>&#39;psk2+ccmp&#39;</span>
+</span></span><span class=line><span class=cl>        option network <span class=s1>&#39;wwan&#39;</span>
+</span></span><span class=line><span class=cl>        option key <span class=s1>&#39;***&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@OpenWrt:~# vi /etc/config/network
+</span></span><span class=line><span class=cl>config interface <span class=s1>&#39;loopback&#39;</span>
+</span></span><span class=line><span class=cl>        option ifname <span class=s1>&#39;lo&#39;</span>
+</span></span><span class=line><span class=cl>        option proto <span class=s1>&#39;static&#39;</span>
+</span></span><span class=line><span class=cl>        option ipaddr <span class=s1>&#39;127.0.0.1&#39;</span>
+</span></span><span class=line><span class=cl>        option netmask <span class=s1>&#39;255.0.0.0&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>config globals <span class=s1>&#39;globals&#39;</span>
+</span></span><span class=line><span class=cl>        option ula_prefix <span class=s1>&#39;fd12:b015:a426::/48&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>config interface <span class=s1>&#39;lan&#39;</span>
+</span></span><span class=line><span class=cl>        option ifname <span class=s1>&#39;eth0&#39;</span>
+</span></span><span class=line><span class=cl>        option <span class=nb>type</span> <span class=s1>&#39;bridge&#39;</span>
+</span></span><span class=line><span class=cl>        option proto <span class=s1>&#39;static&#39;</span>
+</span></span><span class=line><span class=cl>        option ipaddr <span class=s1>&#39;192.168.10.253&#39;</span>
+</span></span><span class=line><span class=cl>        option netmask <span class=s1>&#39;255.255.255.0&#39;</span>
+</span></span><span class=line><span class=cl>        option ip6assign <span class=s1>&#39;60&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>config interface <span class=s1>&#39;wwan&#39;</span>
+</span></span><span class=line><span class=cl>        option proto <span class=s1>&#39;dhcp&#39;</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=kankun-json><a href=#kankun-json class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>kankun-json</h2><blockquote><p><a href=https://github.com/homedash/kankun-json target=_blank rel=noopener>https://github.com/homedash/kankun-json</a></p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>安装opkg
+</span></span><span class=line><span class=cl>tar xz -C / -f /root/opkg-rc3.tar.gz
+</span></span><span class=line><span class=cl>安装at
+</span></span><span class=line><span class=cl>opkg update <span class=o>&amp;&amp;</span> opkg install at
+</span></span><span class=line><span class=cl>root@OpenWrt:~# /etc/init.d/atd <span class=nb>enable</span>
+</span></span><span class=line><span class=cl>root@OpenWrt:~# /etc/init.d/atd start
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=更改开关指示灯默认状态><a href=#更改开关指示灯默认状态 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>更改开关指示灯默认状态</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>For the stock firmware, you can configure the LEDs to act on certain events. Blink blue with network traffic:
+</span></span><span class=line><span class=cl>uci <span class=nb>set</span> system.@led<span class=o>[</span>0<span class=o>]</span>.name<span class=o>=</span>wwan-link
+</span></span><span class=line><span class=cl>uci <span class=nb>set</span> system.@led<span class=o>[</span>0<span class=o>]</span>.trigger<span class=o>=</span>netdev
+</span></span><span class=line><span class=cl>uci <span class=nb>set</span> system.@led<span class=o>[</span>0<span class=o>]</span>.dev<span class=o>=</span>wlan0
+</span></span><span class=line><span class=cl>uci <span class=nb>set</span> system.@led<span class=o>[</span>0<span class=o>]</span>.mode<span class=o>=</span><span class=s1>&#39;link tx rx&#39;</span>
+</span></span><span class=line><span class=cl>uci commit system
+</span></span><span class=line><span class=cl>/etc/init.d/led restart
+</span></span><span class=line><span class=cl>The relay is tied to the red LED, so setting the LED to default ON will make the relay ON after bootup:
+</span></span><span class=line><span class=cl>uci <span class=nb>set</span> system.@led<span class=o>[</span>1<span class=o>]</span>.default<span class=o>=</span><span class=m>1</span>
+</span></span><span class=line><span class=cl>uci commit system
+</span></span><span class=line><span class=cl>/etc/init.d/led restart
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=国际友人写的一个安卓应用><a href=#国际友人写的一个安卓应用 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>国际友人写的一个安卓应用</h2><blockquote><p><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi-g8rSmsvUAhVGxmMKHWXCDkYQFggqMAA&amp;url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.blogspot.choplabalagun.widgetkkforsmartplug%26hl%3Dzh_CN&amp;usg=AFQjCNEWFeH6RMntaYElYJmR7TfNqm3MpQ&amp;sig2=otU8wL_j5qDVNfU_PVtO3A" target=_blank rel=noopener>WidgetKK for SmartPlug & LIFX</a></p></blockquote><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>Current Features:
+</span></span><span class=line><span class=cl>-Voice Commands, Integrated with Google Now.
+</span></span><span class=line><span class=cl>-HomeScreen Widgets <span class=k>for</span> Lollipop and Marshmellow. <span class=o>(</span>They should work now<span class=o>)</span> <span class=o>(</span>6/13/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-System Alarm Clock Integration.        
+</span></span><span class=line><span class=cl>-WIFI Triggers <span class=o>(</span>6/7/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-SSH Integration <span class=o>(</span>6/13/2015<span class=o>)</span> <span class=o>(</span>Bug fixes 7/8/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-DIMMER option <span class=k>for</span> KK version 2. .<span class=o>(</span>6/13/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-Android Wear Integration <span class=o>(</span>voice commands and wifi triggers<span class=o>)</span>
+</span></span><span class=line><span class=cl>-You can send custom SSH commands.<span class=o>(</span>7/8/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-You can deploy the JSON script from the app to any KK plug.<span class=o>(</span>7/8/2015<span class=o>)</span>
+</span></span><span class=line><span class=cl>-AutoReboot script <span class=o>(</span>pings a specific IP, <span class=k>if</span> not available the plug will reboot<span class=o>)</span> useful to ping router.
+</span></span><span class=line><span class=cl>-Follow Me Script <span class=o>(</span>pings a specific IP, <span class=k>if</span> not available the plug will shutdown<span class=o>)</span> useful to autoshutdown when you leave the house<span class=o>(</span>Using the your phone IP<span class=o>)</span>.
+</span></span><span class=line><span class=cl>-Floating Widget to access the KK<span class=err>&#39;</span>s.
+</span></span><span class=line><span class=cl>-Install OPKG bins into your KK.
+</span></span><span class=line><span class=cl>-Deploy micropython bins into your KK
+</span></span><span class=line><span class=cl>-LIFX Bulbs integration with all triggers <span class=o>(</span>08/Oct/2016<span class=o>)</span>
+</span></span><span class=line><span class=cl>-WOL integration with all Triggers <span class=o>(</span>09/16/2016<span class=o>)</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>安装 kankun-json 很方便</p><h2 id=自动更改插座ip地址脚本><a href=#自动更改插座ip地址脚本 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>自动更改插座IP地址脚本</h2><p><a href=https://gist.github.com/ferstar/6ebad5e70e17a9f4c05dabed7bf79d7b target=_blank rel=noopener>https://gist.github.com/ferstar/6ebad5e70e17a9f4c05dabed7bf79d7b</a></p><p>插座IP发生改变后会自动将kankun-json插件配置文件更新为当前IP</p><blockquote><p>其中json解析用到了jq，关于这个神器的编译稍后再说明</p></blockquote></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC/ class=related-link>Shell处理文件名中的空格</a></li><li class=related-item><a href=/post/%E6%9F%A5%E8%AF%A2%E6%9C%80%E8%BF%91%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%86%E7%A0%81%E7%9A%84ip%E5%BD%92%E5%B1%9E%E5%9C%B0/ class=related-link>查询最近暴力破解服务器密码的IP归属地</a></li><li class=related-item><a href=/post/diy_on_newifi_mini/ class=related-link>联想Newifi mini Y1三网接入配置</a></li><li class=related-item><a href=/post/check-online-clients-port-on-xfrps/ class=related-link>缩短xfrp客户端断线重连时间</a></li><li class=related-item><a href=/post/deploy-xfrp-on-openwrt/ class=related-link>Deploy Xfrp on Openwrt</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/linux/ rel=tag class=post-tag-link>#linux</a> <a href=/tags/openwrt/ rel=tag class=post-tag-link>#openwrt</a> <a href=/tags/shell/ rel=tag class=post-tag-link>#shell</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/%E7%BC%96%E8%AF%91openwrt-jq/ rel=prev>&lt; 编译Openwrt jq</a></li><li class=post-nav-next><a href=/post/shell%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/ rel=next>Shell正则表达式 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

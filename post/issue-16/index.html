@@ -1,0 +1,347 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>转换ext4文件系统为btrfs | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="created_date: 2020-01-23T08:09:06+08:00 update_date: 2020-12-19T03:27:38+08:00 comment_url: https://github.com/ferstar/blog/issues/16 主要用这个工具fstransform 先记录一下运行日志： 1 2 3 4 5 6 7 8……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/issue-16/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2020-01-23T08:09:06+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/issue-16/","headline":"转换ext4文件系统为btrfs","description":"created_date: 2020-01-23T08:09:06+08:00 update_date: 2020-12-19T03:27:38+08:00 comment_url: https://github.com/ferstar/blog/issues/16 主要用这个工具fstransform 先记录一下运行日志： 1 2 3 4 5 6 7 8……","inLanguage":"zh-CN","articleSection":"post","wordCount":2042,"image":"https://blog.ferstar.org/icons/apple-touch-icon.png","author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="转换ext4文件系统为btrfs"><meta property="og:description" content="created_date: 2020-01-23T08:09:06+08:00 update_date: 2020-12-19T03:27:38+08:00 comment_url: https://github.com/ferstar/blog/issues/16 主要用这个工具fstransform 先记录一下运行日志： 1 2 3 4 5 6 7 8……"><meta property="og:url" content="https://blog.ferstar.org/post/issue-16/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog.ferstar.org/icons/apple-touch-icon.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2020-01-23T08:09:06+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">转换ext4文件系统为btrfs</h1><div class=post-meta><time datetime=2020-01-23T08:09:06+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2020.1.23</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2042</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;5&nbsp;分钟</span></div><div class="post-body e-content"><blockquote><p>created_date: 2020-01-23T08:09:06+08:00</p></blockquote><blockquote><p>update_date: 2020-12-19T03:27:38+08:00</p></blockquote><blockquote><p>comment_url: <a href=https://github.com/ferstar/blog/issues/16 target=_blank rel=noopener>https://github.com/ferstar/blog/issues/16</a></p></blockquote><p>主要用这个工具<code>fstransform</code>
+先记录一下运行日志：</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>tianbot@ros2go:~$ sudo fstransform /dev/nvme0n1p4 btrfs --force-untested-file-systems
+</span></span><span class=line><span class=cl>fstransform: starting version 0.9.3, checking environment
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> which... 	<span class=s1>&#39;/usr/bin/which&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> expr... 	<span class=s1>&#39;/usr/bin/expr&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> id... 	<span class=s1>&#39;/usr/bin/id&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: parsing <span class=nb>command</span> line arguments
+</span></span><span class=line><span class=cl>fstransform: forcing trasformation of untested file systems <span class=o>(</span>DANGEROUS<span class=o>)</span>. <span class=s1>&#39;--force-untested-file-systems&#39;</span> bytes specified on <span class=nb>command</span> line
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> stat... 	<span class=s1>&#39;/usr/bin/stat&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> mkfifo... 	<span class=s1>&#39;/usr/bin/mkfifo&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> blockdev... 	<span class=s1>&#39;/sbin/blockdev&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> losetup... 	<span class=s1>&#39;/sbin/losetup&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> fsck... 	<span class=s1>&#39;/sbin/fsck&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> mkfs... 	<span class=s1>&#39;/sbin/mkfs&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> mount... 	<span class=s1>&#39;/bin/mount&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> umount... 	<span class=s1>&#39;/bin/umount&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> mkdir... 	<span class=s1>&#39;/bin/mkdir&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> rmdir... 	<span class=s1>&#39;/bin/rmdir&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> rm... 	<span class=s1>&#39;/bin/rm&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> dd... 	<span class=s1>&#39;/bin/dd&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> sync... 	<span class=s1>&#39;/bin/sync&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> fsmove... 	<span class=s1>&#39;/usr/sbin/fsmove&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> fsremap... 	<span class=s1>&#39;/usr/sbin/fsremap&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> fsck<span class=o>(</span><span class=nb>source</span> file-system<span class=o>)</span>...	<span class=s1>&#39;/sbin/fsck&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> fsck<span class=o>(</span>target file-system<span class=o>)</span>...	<span class=s1>&#39;/sbin/fsck&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: looking <span class=k>for</span> optional commands
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> sleep... 	<span class=s1>&#39;/bin/sleep&#39;</span>
+</span></span><span class=line><span class=cl>fstransform: checking <span class=k>for</span> date... 	<span class=s1>&#39;/bin/date&#39;</span>
+</span></span><span class=line><span class=cl>15:24:46 fstransform: environment check passed.
+</span></span><span class=line><span class=cl>15:24:46 fstransform: saving output of this execution into /var/tmp/fstransform/fstransform.log.5394
+</span></span><span class=line><span class=cl>15:24:46 fstransform: preparing to transform device <span class=s1>&#39;/dev/nvme0n1p4&#39;</span> to file-system <span class=nb>type</span> <span class=s1>&#39;btrfs&#39;</span>
+</span></span><span class=line><span class=cl>15:24:46 fstransform: device <span class=s1>&#39;/dev/nvme0n1p4&#39;</span> not found in the output of <span class=nb>command</span> /bin/mount, assuming it is not mounted
+</span></span><span class=line><span class=cl>15:24:46 fstransform: device is now mounted at <span class=s1>&#39;/tmp/fstransform.mount.5394&#39;</span> with file-system <span class=nb>type</span> <span class=s1>&#39;ext4&#39;</span>
+</span></span><span class=line><span class=cl>         
+</span></span><span class=line><span class=cl>15:24:46 fstransform: WARNING: this program is UNTESTED on target file system <span class=s1>&#39;btrfs&#39;</span> !
+</span></span><span class=line><span class=cl>         
+</span></span><span class=line><span class=cl>15:24:46 fstransform: WARNING: this program is tested ONLY on file systems: minix ext2 ext3 ext4 reiserfs jfs xfs
+</span></span><span class=line><span class=cl>         
+</span></span><span class=line><span class=cl>15:24:46 fstransform: WARNING: continuing anyway due to option <span class=s1>&#39;--force-untested-file-systems&#39;</span> <span class=o>(</span>DANGEROUS<span class=o>)</span>
+</span></span><span class=line><span class=cl>15:24:46 fstransform: device raw <span class=nv>size</span> <span class=o>=</span> <span class=m>348535128064</span> bytes
+</span></span><span class=line><span class=cl>15:24:46 fstransform: creating sparse loop file <span class=s1>&#39;/tmp/fstransform.mount.5394/.fstransform.loop.5394&#39;</span> inside device <span class=s1>&#39;/dev/nvme0n1p4&#39;</span>...
+</span></span><span class=line><span class=cl>15:24:46 dd: 1+0 records in
+</span></span><span class=line><span class=cl>15:24:46 dd: 1+0 records out
+</span></span><span class=line><span class=cl>15:24:46 dd: <span class=m>1</span> byte copied, 0.000131407 s, 7.6 kB/s
+</span></span><span class=line><span class=cl>15:24:46 fstransform: device file-system block <span class=nv>size</span> <span class=o>=</span> <span class=m>4096</span> bytes
+</span></span><span class=line><span class=cl>15:24:46 fstransform: device usable <span class=nv>size</span> <span class=o>=</span> <span class=m>348535128064</span> bytes
+</span></span><span class=line><span class=cl>15:24:46 dd: 1+0 records in
+</span></span><span class=line><span class=cl>15:24:46 dd: 1+0 records out
+</span></span><span class=line><span class=cl>15:24:46 dd: <span class=m>1</span> byte copied, 0.000102059 s, 9.8 kB/s
+</span></span><span class=line><span class=cl>15:24:46 fstransform: connected loop device <span class=s1>&#39;/dev/loop11&#39;</span> to file <span class=s1>&#39;/tmp/fstransform.mount.5394/.fstransform.loop.5394&#39;</span>
+</span></span><span class=line><span class=cl>15:24:46 fstransform: formatting loop device <span class=s1>&#39;/dev/loop11&#39;</span> with file-system <span class=nb>type</span> <span class=s1>&#39;btrfs&#39;</span>...
+</span></span><span class=line><span class=cl>15:24:46 fstransform: mounting loop device <span class=s1>&#39;/dev/loop11&#39;</span> on <span class=s1>&#39;/tmp/fstransform.loop.5394&#39;</span> ...
+</span></span><span class=line><span class=cl>15:24:46 fstransform: loop device <span class=s1>&#39;/dev/loop11&#39;</span> mounted successfully.
+</span></span><span class=line><span class=cl>15:24:46 fstransform: preliminary steps completed, now comes the delicate part:
+</span></span><span class=line><span class=cl>15:24:46 fstransform: fstransform will move <span class=s1>&#39;/dev/nvme0n1p4&#39;</span> contents into the loop file.
+</span></span><span class=line><span class=cl>         
+</span></span><span class=line><span class=cl>15:24:46 fstransform: WARNING: THIS IS IMPORTANT! <span class=k>if</span> either the original device <span class=s1>&#39;/dev/nvme0n1p4&#39;</span>
+</span></span><span class=line><span class=cl>                      or the loop device <span class=s1>&#39;/dev/loop11&#39;</span> become FULL,
+</span></span><span class=line><span class=cl>                      
+</span></span><span class=line><span class=cl>                       YOU  WILL  LOSE  YOUR  DATA !
+</span></span><span class=line><span class=cl>                      
+</span></span><span class=line><span class=cl>                      fstransform checks <span class=k>for</span> enough available space,
+</span></span><span class=line><span class=cl>                      in any <span class=k>case</span> it is recommended to open another terminal, <span class=nb>type</span>
+</span></span><span class=line><span class=cl>                        watch df /dev/nvme0n1p4 /dev/loop11
+</span></span><span class=line><span class=cl>                      and check that both the original device <span class=s1>&#39;/dev/nvme0n1p4&#39;</span>
+</span></span><span class=line><span class=cl>                      and the loop device <span class=s1>&#39;/dev/loop11&#39;</span> are NOT becoming full.
+</span></span><span class=line><span class=cl>                      <span class=k>if</span> one of them is becoming full <span class=o>(</span>or both<span class=o>)</span>,
+</span></span><span class=line><span class=cl>                      you MUST stop fstransform with CTRL+C or equivalent.
+</span></span><span class=line><span class=cl>                      
+</span></span><span class=line><span class=cl>                      this is your chance to quit.
+</span></span><span class=line><span class=cl>                      press ENTER to <span class=k>continue</span>, or CTRL+C to quit: 
+</span></span><span class=line><span class=cl>15:25:24 fstransform: moving <span class=s1>&#39;/dev/nvme0n1p4&#39;</span> contents into the loop file.
+</span></span><span class=line><span class=cl>15:25:24 fstransform: this may take a long time, please be patient...
+</span></span><span class=line><span class=cl>15:25:24 fsmove: move<span class=o>()</span> skipped <span class=sb>`</span>/tmp/fstransform.mount.5394/.fstransform.loop.5394<span class=s1>&#39;, matches exclude list
+</span></span></span><span class=line><span class=cl><span class=s1>15:25:45 fsmove: progress: 1.5% done, 180.7 gigabytes still to move
+</span></span></span><span class=line><span class=cl><span class=s1>15:25:54 fsmove: progress: 2.9% done, 178.0 gigabytes still to move, estimated 15 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:07 fsmove: progress: 4.4% done, 175.3 gigabytes still to move, estimated 15 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:16 fsmove: progress: 5.9% done, 172.6 gigabytes still to move, estimated 15 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:21 fsmove: progress: 7.4% done, 169.9 gigabytes still to move, estimated 15 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:27 fsmove: progress: 8.8% done, 167.2 gigabytes still to move, estimated 15 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:33 fsmove: progress: 10.3% done, 164.5 gigabytes still to move, estimated 10 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:38 fsmove: progress: 11.8% done, 161.8 gigabytes still to move, estimated 10 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:46 fsmove: progress: 13.3% done, 159.1 gigabytes still to move, estimated 10 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:51 fsmove: progress: 14.7% done, 156.4 gigabytes still to move, estimated 10 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:26:56 fsmove: progress: 16.2% done, 153.7 gigabytes still to move, estimated 10 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:05 fsmove: progress: 17.7% done, 151.0 gigabytes still to move, estimated  8 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:10 fsmove: progress: 19.2% done, 148.3 gigabytes still to move, estimated  8 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:15 fsmove: progress: 20.6% done, 145.6 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:30 fsmove: progress: 22.1% done, 142.9 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:39 fsmove: progress: 23.6% done, 140.1 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:44 fsmove: progress: 25.1% done, 137.4 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:27:50 fsmove: progress: 26.5% done, 134.7 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:00 fsmove: progress: 28.0% done, 132.0 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:21 fsmove: progress: 29.5% done, 129.3 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:26 fsmove: progress: 31.0% done, 126.6 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:35 fsmove: progress: 32.4% done, 123.9 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:49 fsmove: progress: 33.9% done, 121.2 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:52 fsmove: progress: 35.4% done, 118.5 gigabytes still to move, estimated  8 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:28:58 fsmove: progress: 36.9% done, 115.8 gigabytes still to move, estimated  8 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:29:04 fsmove: progress: 38.3% done, 113.1 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:29:09 fsmove: progress: 39.8% done, 110.4 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:29:26 fsmove: progress: 41.3% done, 107.7 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:29:44 fsmove: progress: 42.8% done, 105.0 gigabytes still to move, estimated  8 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:29:54 fsmove: progress: 44.2% done, 102.3 gigabytes still to move, estimated  7 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:02 fsmove: progress: 45.7% done,  99.6 gigabytes still to move, estimated  5 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:13 fsmove: progress: 47.2% done,  96.9 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:22 fsmove: progress: 48.7% done,  94.2 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:31 fsmove: progress: 50.1% done,  91.4 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:42 fsmove: progress: 51.6% done,  88.7 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:30:52 fsmove: progress: 53.1% done,  86.0 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:06 fsmove: progress: 54.6% done,  83.3 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:14 fsmove: progress: 56.0% done,  80.6 gigabytes still to move, estimated  7 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:19 fsmove: progress: 57.5% done,  77.9 gigabytes still to move, estimated  6 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:27 fsmove: progress: 59.0% done,  75.2 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:32 fsmove: progress: 60.5% done,  72.5 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:38 fsmove: progress: 61.9% done,  69.8 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:45 fsmove: progress: 63.4% done,  67.1 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:53 fsmove: progress: 64.9% done,  64.4 gigabytes still to move, estimated  4 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:31:58 fsmove: progress: 66.4% done,  61.7 gigabytes still to move, estimated  3 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:04 fsmove: progress: 67.8% done,  59.0 gigabytes still to move, estimated  3 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:12 fsmove: progress: 69.3% done,  56.3 gigabytes still to move, estimated  3 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:27 fsmove: progress: 70.8% done,  53.6 gigabytes still to move, estimated  2 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:33 fsmove: progress: 72.3% done,  50.9 gigabytes still to move, estimated  2 minutes left
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:36 fsmove: job completed.
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:36 fstransform: unmounting and running &#39;</span>/sbin/fsck<span class=s1>&#39; (disk check) on loop file &#39;</span>/tmp/fstransform.mount.5394/.fstransform.loop.5394<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:39 fsck: fsck from util-linux 2.31.1
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:39 fstransform: disconnected loop device &#39;</span>/dev/loop11<span class=s1>&#39; from file &#39;</span>/tmp/fstransform.mount.5394/.fstransform.loop.5394<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:39 fstransform: unmounting device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39; before disk check
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:42 fstransform: running &#39;</span>/sbin/fsck<span class=s1>&#39; (disk check) on device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:42 fsck: fsck from util-linux 2.31.1
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:42 fsck: home: Inode 3336 extent tree (at level 2) could be narrower.  IGNORED.
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fsck: home: 12/21274624 files (0.0% non-contiguous), 36800594/85091584 blocks
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fstransform: mounting again device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39; read-only
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fstransform: launching &#39;</span>/usr/sbin/fsremap<span class=s1>&#39; in simulated mode
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fsremap: starting job 1, persistence data and logs are in &#39;</span>/var/tmp/fstransform/fsremap.job.1<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fsremap: if this job is interrupted, for example by a power failure,
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -n -q --resume-job=1 -- /dev/nvme0n1p4
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:43 fsremap: analysis completed: 135.22 gigabytes must be relocated
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: allocated 3.50 gigabytes RAM as memory buffer
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: primary-storage is 7.01 gigabytes, initialized and mmapped() to contiguous RAM
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: (simulated) starting in-place remapping. this may take a LONG time ...
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: (simulated) progress:  2.6% done, 135.2 gigabytes still to relocate
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: (simulated) progress: 69.0% done,  45.4 gigabytes still to relocate
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: (simulated) clearing 1.38 gigabytes free-space from device ...
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: (simulated) job completed.
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fstransform: launching &#39;</span>/usr/sbin/fsremap<span class=s1>&#39; in REAL mode to perform in-place remapping.
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: starting job 2, persistence data and logs are in &#39;</span>/var/tmp/fstransform/fsremap.job.2<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: if this job is interrupted, for example by a power failure,
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: you CAN RESUME it with: /usr/sbin/fsremap -q --resume-job=2 -- /dev/nvme0n1p4
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:45 fsremap: analysis completed: 135.22 gigabytes must be relocated
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:46 fsremap: allocated 3.50 gigabytes RAM as memory buffer
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:49 fsremap: primary-storage is 7.01 gigabytes, initialized and mmapped() to contiguous RAM
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:49 fsremap: successfully unmounted device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:49 fsremap: everything ready for in-place remapping, this is your LAST chance to quit.
+</span></span></span><span class=line><span class=cl><span class=s1>15:32:49 fsremap: WARN: press ENTER to proceed, or CTRL+C to quit
+</span></span></span><span class=line><span class=cl><span class=s1>
+</span></span></span><span class=line><span class=cl><span class=s1>15:33:32 fsremap: starting in-place remapping. this may take a LONG time ...
+</span></span></span><span class=line><span class=cl><span class=s1>15:33:43 fsremap: progress: 2.6% done, 135.2 gigabytes still to relocate
+</span></span></span><span class=line><span class=cl><span class=s1>15:36:29 fsremap: progress: 69.0% done,  45.4 gigabytes still to relocate, estimated  1 minute and 20 seconds left
+</span></span></span><span class=line><span class=cl><span class=s1>15:37:43 fsremap: clearing 1.38 gigabytes free-space from device ...
+</span></span></span><span class=line><span class=cl><span class=s1>15:41:25 fsremap: job completed.
+</span></span></span><span class=line><span class=cl><span class=s1>15:41:28 fstransform: running again &#39;</span>/sbin/fsck<span class=s1>&#39; (disk check) on device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>15:41:28 fsck: fsck from util-linux 2.31.1
+</span></span></span><span class=line><span class=cl><span class=s1>15:41:28 fstransform: completed successfully. device &#39;</span>/dev/nvme0n1p4<span class=s1>&#39; now contains &#39;</span>btrfs<span class=err>&#39;</span> file-system
+</span></span></code></pre></td></tr></table></div></div></div><p>转换完毕后挂载随便看几个文件看是不是正常，一般是OK的，然后改一下挂载参数
+<code>/etc/fstab</code></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nv>UUID</span><span class=o>=</span>361c83ca-fa86-417a-96ce-29569c9bc98e /home   btrfs ssd,noatime,subvol<span class=o>=</span>/   <span class=m>0</span>
+</span></span><span class=line><span class=cl>   <span class=m>0</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>下一步再搞一下透明压缩（用lzo算法）：</p><p><code>btrfs filesystem defragment -v -clzo /mountpoint</code></p><p>注意这是压缩已有文件。如果要真正的“实时透明压缩”请在挂载参数上加<code>compress-force=lzo</code>，这样存进去的文件都会被压缩了。</p><p>玩一玩子卷<code>subvolume</code></p><p>新建只读子卷，当做备份</p><p><code>sudo btrfs subvolume snapshot -r /@ /@backup</code></p><p>若干天后可能胡折腾系统挂了，需要还原</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>1. 删除原来启动的子卷
+</span></span><span class=line><span class=cl>sudo btrfs subvolume delete /@
+</span></span><span class=line><span class=cl>2. 从原来备份的子卷再建一个同名子卷
+</span></span><span class=line><span class=cl>sudo btrfs subvolume snapshot /@backup /@
+</span></span></code></pre></td></tr></table></div></div></div><p>所有更改就又回来了</p><p>不习惯手动挡可以用这个自动挡：<a href=https://github.com/teejee2008/timeshift target=_blank rel=noopener>timeshift</a></p><p>BTRFS大法好!</p></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/issue-33/ class=related-link>修复Fcitx输入法文字候选框在PyCharm中无法跟随光标问题</a></li><li class=related-item><a href=/post/issue-32/ class=related-link>Linux系统备份小计</a></li><li class=related-item><a href=/post/issue-30/ class=related-link>记一次公众号后台删库不需跑路的过程</a></li><li class=related-item><a href=/post/issue-27/ class=related-link>miniconda的一个坑</a></li><li class=related-item><a href=/post/issue-25/ class=related-link>Docker 清日志</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/linux/ rel=tag class=post-tag-link>#linux</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/issue-17/ rel=prev>&lt; 为知笔记在Ubuntu 18.04上的编译过程</a></li><li class=post-nav-next><a href=/post/issue-15/ rel=next>JetBrains全家桶升级到2019.3无法使用输入法的解决方法 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>

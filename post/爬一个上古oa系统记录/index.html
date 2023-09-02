@@ -1,0 +1,732 @@
+<!doctype html><html lang=zh-CN><head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#"><meta charset=utf-8><meta name=generator content="Hugo 0.118.2"><meta name=theme-color content="#fff"><meta name=color-scheme content="light dark"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=format-detection content="telephone=no, date=no, address=no, email=no"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><title>爬一个上古OA系统记录 | STAY REAL</title><link rel=stylesheet href=/css/meme.min.28b7932bfdc9e80610bb0d7f8a070916d6488d841e9455389088f66435d88ee9.css><script src=/js/meme.min.417dc09b40f59a14dc853cde319769c2df79d1c89fe5f15c3e158ee0ddb9a0be.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media=print onload='this.media="all"'><noscript><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto+Serif+SC:wght@400;500;700&amp;family=Source+Code+Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"></noscript><meta name=author content="ferstar"><meta name=description content="对, 是的, 就是我司的OA系统, 界面浓浓的上世纪90年代风格, 响应也很慢, 所以一般除了……"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=mask-icon href=/icons/safari-pinned-tab.svg color=#2a6df4><link rel=apple-touch-icon sizes=180x180 href=/icons/apple-touch-icon.png><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-title content="STAY REAL"><meta name=apple-mobile-web-app-status-bar-style content="black"><meta name=mobile-web-app-capable content="yes"><meta name=application-name content="STAY REAL"><meta name=msapplication-starturl content="../../"><meta name=msapplication-TileColor content="#fff"><meta name=msapplication-TileImage content="../../icons/mstile-150x150.png"><link rel=manifest href=/manifest.json><link rel=canonical href=https://blog.ferstar.org/post/%E7%88%AC%E4%B8%80%E4%B8%AA%E4%B8%8A%E5%8F%A4oa%E7%B3%BB%E7%BB%9F%E8%AE%B0%E5%BD%95/><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","datePublished":"2016-12-23T09:51:00+08:00","dateModified":"2023-09-02T04:54:37+00:00","url":"https://blog.ferstar.org/post/%E7%88%AC%E4%B8%80%E4%B8%AA%E4%B8%8A%E5%8F%A4oa%E7%B3%BB%E7%BB%9F%E8%AE%B0%E5%BD%95/","headline":"爬一个上古OA系统记录","description":"对, 是的, 就是我司的OA系统, 界面浓浓的上世纪90年代风格, 响应也很慢, 所以一般除了……","inLanguage":"zh-CN","articleSection":"post","wordCount":3398,"image":["https://blog.ferstar.org/~/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20161228093640.png"],"author":{"@type":"Person","description":"May the truth be without barriers","image":"https://blog.ferstar.org/icons/apple-touch-icon.png","url":"https://blog.ferstar.org/","name":"ferstar"},"license":"[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)","publisher":{"@type":"Organization","name":"STAY REAL","logo":{"@type":"ImageObject","url":"https://blog.ferstar.org/icons/apple-touch-icon.png"},"url":"https://blog.ferstar.org/"},"mainEntityOfPage":{"@type":"WebSite","@id":"https://blog.ferstar.org/"}}</script><meta property="og:title" content="爬一个上古OA系统记录"><meta property="og:description" content="对, 是的, 就是我司的OA系统, 界面浓浓的上世纪90年代风格, 响应也很慢, 所以一般除了……"><meta property="og:url" content="https://blog.ferstar.org/post/%E7%88%AC%E4%B8%80%E4%B8%AA%E4%B8%8A%E5%8F%A4oa%E7%B3%BB%E7%BB%9F%E8%AE%B0%E5%BD%95/"><meta property="og:site_name" content="STAY REAL"><meta property="og:locale" content="zh"><meta property="og:image" content="https://blog.ferstar.org/~/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20161228093640.png"><meta property="og:type" content="article"><meta property="article:published_time" content="2016-12-23T09:51:00+08:00"><meta property="article:modified_time" content="2023-09-02T04:54:37+00:00"><meta property="article:section" content="post"><link rel=preconnect href=https://www.google-analytics.com crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-7491858-2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-7491858-2")</script></head><body><div class=container><a id=theme-switcher href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5 242 7a18 18 0 0128 0l48.8 97.5L422.2 70A18 18 0 01442 89.8l-34.5 103.4L505 242a18 18 0 010 28l-97.5 48.8L442 422.2A18 18 0 01422.2 442l-103.4-34.5L270 505a18 18 0 01-28 0l-48.8-97.5L89.8 442A18 18 0 0170 422.2l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8L70 89.8A18 18 0 0189.8 70zM256 128a128 128 0 10.01.0M256 160a96 96 0 10.01.0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412A256 256 0 10181 5a11.5 11.5.0 00-5 20A201.5 201.5.0 0142 399a11.5 11.5.0 00-15 13"/></svg></a><main class="main single" id=main><div class=main-inner><article class="content post h-entry" data-align=justify data-type=post><h1 class="post-title p-name">爬一个上古OA系统记录</h1><div class=post-meta><time datetime=2016-12-23T09:51:00+08:00 class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6.0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6.0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6.0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6.0 12 5.4 12 12v52h48c26.5.0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3.0 6-2.7 6-6z"/></svg>&nbsp;2016.12.23</time>
+<span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49.0 112v288c0 26.51 21.49 48 48 48h416c26.51.0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href=/post/ class="category-link p-category">Post</a></span>
+<span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3.0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9.0l60.1 60.1c18.8 18.7 18.8 49.1.0 67.9zM284.2 99.8 21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3.0-17l-111-111c-4.8-4.7-12.4-4.7-17.1.0zM124.1 339.9c-5.5-5.5-5.5-14.3.0-19.8l154-154c5.5-5.5 14.3-5.5 19.8.0s5.5 14.3.0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8.0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;3398</span>
+<span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5.0-2e2-89.5-2e2-2e2S145.5 56 256 56s2e2 89.5 2e2 2e2-89.5 2e2-2e2 2e2zm61.8-104.4-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6.0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;7&nbsp;分钟</span></div><div class="post-body e-content"><p>对, 是的, 就是我司的OA系统, 界面浓浓的上世纪90年代风格, 响应也很慢, 所以一般除了看通知和月底交报表以外几乎不会打开这货, 但是公司通知确实是在这上面分发的, 所以就萌生了写个脚本定时检查通知, 有新通知给我发邮件提醒</p><p>也就是一个爬虫的情形, 所以兴高采烈开始用Python撸</p><h2 id=1-找登录接口及新消息接口><a href=#1-找登录接口及新消息接口 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>1. 找登录接口及新消息接口</h2><blockquote><p>这一步没什么好说的, 用 Chrome 或者 Firefox 的开发者工具 Network 选项找</p></blockquote><ul><li><p>登录接口</p><p>URL: <code>http://&lt;我司官网url>/logincheck.php</code></p><p>POST 表单内容: <code>UNAME=用户名&amp;PASSWORD=密码</code></p><p>编码: <code>charset=gb2312</code></p><p>Content-Type: <code>application/x-www-form-urlencoded</code></p><p>得到cookie格式: response headers 里面 <code>Set-Cookie</code>字段值拼起来</p></li><li><p>新消息接口</p><p>URL: <code>http://&lt;我司官网url>/attachment/new_sms/&lt;userid>.sms?now=&lt;timestamp></code></p><p>方法: 当然是带着<code>cookie</code>的<code>GET</code></p><p>cookie: <code>PHPSESSID=&lt;模拟登录后拿到>; USER_NAME_COOKIE=&lt;用户名全拼>; OA_USER_ID=&lt;用户名全拼>; SID_&lt;员工编号, 目前三位数, 也是模拟登录后才能拿到>=&lt;这个不知道什么鬼, 反正模拟登录后也能拿到>; UI_COOKIE=0</code></p><p>返回值: 新消息为1 / 无新消息为0 <string></p></li></ul><h2 id=2-拿-cookie><a href=#2-拿-cookie class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>2. 拿 cookie</h2><p>自然是模拟登录才能拿到了, 比较奇葩的是这货只有<code>curl</code>才能解析到正确的响应, 其他用<code>requests</code>或者<code>http.client</code>构造<code>POST</code>都无法拿到正确的<code>cookie</code>信息, 所以用<code>pycurl</code>解决, 放码:</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>Cookies</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>url</span> <span class=o>=</span> <span class=s1>&#39;我司URL&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>username</span> <span class=o>=</span> <span class=s1>&#39;用户名&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=s1>&#39;密码&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>status</span> <span class=o>=</span> <span class=kc>None</span>  <span class=c1># 存status code, 正确回应是302</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>cookies</span> <span class=o>=</span> <span class=p>[]</span>  <span class=c1># 存各种cookie项</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>user_id</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_body</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>buf</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=c1># drop body info</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;nul&#39;</span><span class=p>,</span> <span class=s1>&#39;w&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>fh</span><span class=p>:</span>  <span class=c1># 执行perform函数后总是返回烦人的body内容, 我只要header信息, 所以这部分body直接扔掉, linux 系统 nul 要换成 /dev/null</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=n>file</span><span class=o>=</span><span class=n>fh</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_store</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>buf</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>buf</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;gb2312&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>buf</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;HTTP/1.1&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 获取HTTP Status Code</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>status</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39; &#39;</span><span class=p>)[</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=n>buf</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;Set-Cookie:&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 获取 Cookie</span>
+</span></span><span class=line><span class=cl>            <span class=n>item</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;: &#39;</span><span class=p>)[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;;&#39;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>cookies</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>item</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>item</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;SID_&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=c1># 从 Cookie 中截取 user_id</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>user_id</span> <span class=o>=</span> <span class=n>item</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;=&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;_&#39;</span><span class=p>)[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>get</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>post_data</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;UNAME&#39;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>username</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;PASSWORD&#39;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>password</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Form data must be provided already urlencoded.</span>
+</span></span><span class=line><span class=cl>        <span class=n>post_fields</span> <span class=o>=</span> <span class=n>urlencode</span><span class=p>(</span><span class=n>post_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>c</span> <span class=o>=</span> <span class=n>pycurl</span><span class=o>.</span><span class=n>Curl</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>URL</span><span class=p>,</span> <span class=s1>&#39;http://</span><span class=si>{}</span><span class=s1>/logincheck.php&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>url</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>WRITEFUNCTION</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>_body</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># save header info</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>HEADERFUNCTION</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>_store</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Sets request method to POST,</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Content-Type header to application/x-www-form-urlencoded</span>
+</span></span><span class=line><span class=cl>        <span class=c1># and data to send in request body.</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>POSTFIELDS</span><span class=p>,</span> <span class=n>post_fields</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>perform</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>然后就是调用上面这货拿 cookie 了</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>ck</span> <span class=o>=</span> <span class=n>Cookies</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>ck</span><span class=o>.</span><span class=n>username</span> <span class=o>=</span> <span class=s2>&#34;xxx&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ck</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=s2>&#34;xxx&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ck</span><span class=o>.</span><span class=n>get</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>cookie</span> <span class=o>=</span> <span class=s1>&#39;; &#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>cookies</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># cookie = PHPSESSID=67244df787460089c92def22b99e8cb1; USER_NAME_COOKIE=xxx; OA_USER_ID=xxx; SID_110=32e00603; UI_COOKIE=0</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=3-检测新消息><a href=#3-检测新消息 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>3. 检测新消息</h2><p>拿到 cookie 后就可以从消息接口 GET 信息了, <code>pycurl</code>还是难用, 这次用自带的<code>http.client</code>来做</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>check_sms</span><span class=p>(</span><span class=n>user_id</span><span class=p>,</span> <span class=n>cookie</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>conn</span> <span class=o>=</span> <span class=n>http</span><span class=o>.</span><span class=n>client</span><span class=o>.</span><span class=n>HTTPConnection</span><span class=p>(</span><span class=n>host</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>headers</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;user-agent&#39;</span><span class=p>:</span> <span class=s2>&#34;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept&#39;</span><span class=p>:</span> <span class=s2>&#34;*/*&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept-encoding&#39;</span><span class=p>:</span> <span class=s2>&#34;gzip, deflate, sdch&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept-language&#39;</span><span class=p>:</span> <span class=s2>&#34;zh-CN,zh;q=0.8&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;cookie&#39;</span><span class=p>:</span> <span class=n>cookie</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>conn</span><span class=o>.</span><span class=n>request</span><span class=p>(</span><span class=s2>&#34;GET&#34;</span><span class=p>,</span> <span class=s2>&#34;/attachment/new_sms/</span><span class=si>{}</span><span class=s2>.sms?now=</span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>user_id</span><span class=p>,</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()),</span> <span class=n>headers</span><span class=o>=</span><span class=n>headers</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>getresponse</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>data</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s2>&#34;gb2312&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>返回值为1即有新消息, 0表示没有新消息</p><blockquote><p>PS: 比较奇葩的是走到这一步忽然才发现这个新消息接口不用cookie也可以查询, 也就是根本匿名都可以访问, 顿时有种吃了苍蝇的感觉, 好比是好不容易撬掉门锁以后忽然发现这门即使上锁也能打开的...</p></blockquote><h2 id=4-有新消息发邮件><a href=#4-有新消息发邮件 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>4. 有新消息发邮件</h2><p>这一步写个循环定时检测消息即可</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>class</span> <span class=nc>Mail</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>mail_addr</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>send</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>is_send</span><span class=p>:</span>  <span class=c1># 已经发过邮件就不再发送</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 第三方 SMTP 服务</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_host</span> <span class=o>=</span> <span class=s2>&#34;smtp.163.com&#34;</span>  <span class=c1># SMTP服务器</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_user</span> <span class=o>=</span> <span class=s2>&#34; &#34;</span>  <span class=c1># 用户名</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_pass</span> <span class=o>=</span> <span class=s2>&#34; &#34;</span>  <span class=c1># 密码</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>sender</span> <span class=o>=</span> <span class=s1>&#39; &#39;</span>  <span class=c1># 发件人邮箱(最好写全, 不然会失败)</span>
+</span></span><span class=line><span class=cl>            <span class=n>receivers</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39; &#39;</span><span class=p>]</span>  <span class=c1># 接收邮件，可设置为你的QQ邮箱或者其他邮箱</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>content</span> <span class=o>=</span> <span class=s1>&#39;OA有新消息, 请注意查收&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=n>title</span> <span class=o>=</span> <span class=s1>&#39;OA有新消息, 请注意查收&#39;</span>  <span class=c1># 邮件主题</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span> <span class=o>=</span> <span class=n>MIMEText</span><span class=p>(</span><span class=n>content</span><span class=p>,</span> <span class=s1>&#39;plain&#39;</span><span class=p>,</span> <span class=s1>&#39;utf-8&#39;</span><span class=p>)</span>  <span class=c1># 内容, 格式, 编码</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;From&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>sender</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;To&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;,&#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>receivers</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;Subject&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>title</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span> <span class=o>=</span> <span class=n>smtplib</span><span class=o>.</span><span class=n>SMTP_SSL</span><span class=p>(</span><span class=n>mail_host</span><span class=p>,</span> <span class=mi>465</span><span class=p>)</span>  <span class=c1># 启用SSL发信, 端口一般是465</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span><span class=o>.</span><span class=n>login</span><span class=p>(</span><span class=n>mail_user</span><span class=p>,</span> <span class=n>mail_pass</span><span class=p>)</span>  <span class=c1># 登录验证</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span><span class=o>.</span><span class=n>sendmail</span><span class=p>(</span><span class=n>sender</span><span class=p>,</span> <span class=n>receivers</span><span class=p>,</span> <span class=n>message</span><span class=o>.</span><span class=n>as_string</span><span class=p>())</span>  <span class=c1># 发送</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;mail has been send successfully.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>except</span> <span class=n>smtplib</span><span class=o>.</span><span class=n>SMTPException</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=n>e</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>mail</span> <span class=o>=</span> <span class=n>Mail</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>check_sms</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>user_id</span><span class=p>,</span> <span class=n>cookie</span><span class=p>)</span> <span class=o>!=</span> <span class=s2>&#34;0&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail</span><span class=o>.</span><span class=n>send</span><span class=p>()</span>  <span class=c1># 有新消息, 发邮件</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>True</span>  <span class=c1># 证明邮件已发</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>False</span>  <span class=c1># 无新消息, 恢复未发邮件状态</span>
+</span></span><span class=line><span class=cl>        <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=mi>60</span><span class=p>)</span>  <span class=c1># sleep 5min</span>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=ne>KeyboardInterrupt</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Ctrl + C pressed, will exit.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>sys</span><span class=o>.</span><span class=n>exit</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=5-pyinstaller-打包><a href=#5-pyinstaller-打包 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>5. pyinstaller 打包</h2><p>这部分在之前的文章<a href=http://0ne.farbox.com/post/python/pythonda-bao-gong-ju-pyinstallershi-yong-ji-lu target=_blank rel=noopener>Python打包工具Pyinstaller使用记录</a>有提到, 照着撸即可</p><p><code>pyinstaller -F -c check_sms.py</code></p><h2 id=6-其他包装><a href=#6-其他包装 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>6. 其他包装</h2><p>把参数写死不是个好事情, 所以又弄了下配置文件, 把用户名/密码/OA地址都写到配置文件里</p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>configparser</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>cf</span> <span class=o>=</span> <span class=n>configparser</span><span class=o>.</span><span class=n>ConfigParser</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>cf</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>conf_file</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span> <span class=o>=</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s2>&#34;请输入你的邮箱地址: &#34;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>,</span> <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>cf</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=nb>open</span><span class=p>(</span><span class=n>conf_file</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>))</span>  <span class=c1># 写入配置文件</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div></div><p>然后发现如果明文保存密码似乎也是不好的, 于是再上个君子协定<code>base64</code></p><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>base64</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=n>base64</span><span class=o>.</span><span class=n>b64decode</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>),</span> <span class=s1>&#39;utf8&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf8&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;请输入OA密码: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ck</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=n>pwd_input</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>,</span> <span class=n>base64</span><span class=o>.</span><span class=n>b64encode</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>password</span><span class=p>,</span> <span class=s1>&#39;utf8&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf8&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=nb>open</span><span class=p>(</span><span class=n>conf_file</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div></div><h2 id=7-成果><a href=#7-成果 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>7. 成果</h2><p>嗯, 终于可以不用担心那个垃圾的OA漏消息了,我很满意
+<img src=~/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20161228093640.png alt></p><h2 id=8-放码><a href=#8-放码 class=anchor-link><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96.0-59.27-59.26-59.27-155.7.0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757.0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037.0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482.0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96.0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454.0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037.0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639.0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>8. 放码</h2><div class=highlight><div class=chroma><div class=table-container><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>base64</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>configparser</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>http.client</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>msvcrt</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pycurl</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>smtplib</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>email.mime.text</span> <span class=kn>import</span> <span class=n>MIMEText</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>urllib.parse</span> <span class=kn>import</span> <span class=n>urlencode</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Cookies</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>url</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>username</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>status</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>cookies</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>user_id</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_body</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>buf</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=c1># drop body info</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;nul&#39;</span><span class=p>,</span> <span class=s1>&#39;w&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>fh</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=n>file</span><span class=o>=</span><span class=n>fh</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_store</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>buf</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>buf</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;gb2312&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>buf</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;HTTP/1.1&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 获取HTTP Status Code</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>status</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39; &#39;</span><span class=p>)[</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=n>buf</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;Set-Cookie:&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 获取 Cookie</span>
+</span></span><span class=line><span class=cl>            <span class=n>item</span> <span class=o>=</span> <span class=n>buf</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;: &#39;</span><span class=p>)[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;;&#39;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>cookies</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>item</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>item</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s1>&#39;SID_&#39;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=c1># 从 Cookie 中截取 user_id</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>user_id</span> <span class=o>=</span> <span class=n>item</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;=&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;_&#39;</span><span class=p>)[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>get</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>post_data</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;UNAME&#39;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>username</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s1>&#39;PASSWORD&#39;</span><span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>password</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Form data must be provided already urlencoded.</span>
+</span></span><span class=line><span class=cl>        <span class=n>post_fields</span> <span class=o>=</span> <span class=n>urlencode</span><span class=p>(</span><span class=n>post_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>c</span> <span class=o>=</span> <span class=n>pycurl</span><span class=o>.</span><span class=n>Curl</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>URL</span><span class=p>,</span> <span class=s1>&#39;http://</span><span class=si>{}</span><span class=s1>/logincheck.php&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>url</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>WRITEFUNCTION</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>_body</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># save header info</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>HEADERFUNCTION</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>_store</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Sets request method to POST,</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Content-Type header to application/x-www-form-urlencoded</span>
+</span></span><span class=line><span class=cl>        <span class=c1># and data to send in request body.</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>setopt</span><span class=p>(</span><span class=n>c</span><span class=o>.</span><span class=n>POSTFIELDS</span><span class=p>,</span> <span class=n>post_fields</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>perform</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>c</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Mail</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>send_to</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>host</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>send</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=bp>self</span><span class=o>.</span><span class=n>is_send</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 第三方 SMTP 服务</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_host</span> <span class=o>=</span> <span class=s2>&#34;smtp.126.com&#34;</span>  <span class=c1># SMTP服务器</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_user</span> <span class=o>=</span> <span class=s2>&#34;xxx&#34;</span>  <span class=c1># 用户名</span>
+</span></span><span class=line><span class=cl>            <span class=n>mail_pass</span> <span class=o>=</span> <span class=s2>&#34;xxx&#34;</span>  <span class=c1># 密码</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>sender</span> <span class=o>=</span> <span class=s1>&#39;xxx@126.com&#39;</span>  <span class=c1># 发件人邮箱(最好写全, 不然会失败)</span>
+</span></span><span class=line><span class=cl>            <span class=n>title</span> <span class=o>=</span> <span class=s1>&#39;OA有新消息, 请注意查收&#39;</span>  <span class=c1># 邮件主题</span>
+</span></span><span class=line><span class=cl>            <span class=n>content</span> <span class=o>=</span> <span class=s1>&#39;点我直达: http://</span><span class=si>{}</span><span class=s1> </span><span class=se>\n\n</span><span class=s1>有问题可以在云之家@贾大空&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>host</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>message</span> <span class=o>=</span> <span class=n>MIMEText</span><span class=p>(</span><span class=n>content</span><span class=p>,</span> <span class=s1>&#39;plain&#39;</span><span class=p>,</span> <span class=s1>&#39;utf-8&#39;</span><span class=p>)</span>  <span class=c1># 内容, 格式, 编码</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;From&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>sender</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;To&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>send_to</span>
+</span></span><span class=line><span class=cl>            <span class=n>message</span><span class=p>[</span><span class=s1>&#39;Subject&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>title</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span> <span class=o>=</span> <span class=n>smtplib</span><span class=o>.</span><span class=n>SMTP_SSL</span><span class=p>(</span><span class=n>mail_host</span><span class=p>,</span> <span class=mi>465</span><span class=p>)</span>  <span class=c1># 启用SSL发信, 端口一般是465</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span><span class=o>.</span><span class=n>login</span><span class=p>(</span><span class=n>mail_user</span><span class=p>,</span> <span class=n>mail_pass</span><span class=p>)</span>  <span class=c1># 登录验证</span>
+</span></span><span class=line><span class=cl>                <span class=n>smtpObj</span><span class=o>.</span><span class=n>sendmail</span><span class=p>(</span><span class=n>sender</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>send_to</span><span class=p>,</span> <span class=n>message</span><span class=o>.</span><span class=n>as_string</span><span class=p>())</span>  <span class=c1># 发送</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;检测到新消息, 邮件通知已发送&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>except</span> <span class=n>smtplib</span><span class=o>.</span><span class=n>SMTPException</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;通知邮件发送失败, 五分钟后再试&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>pwd_input</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;输入密码替换为星号
+</span></span></span><span class=line><span class=cl><span class=s2>    :return: 字符串形式密码
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>chars</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>new_char</span> <span class=o>=</span> <span class=n>msvcrt</span><span class=o>.</span><span class=n>getch</span><span class=p>()</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=n>encoding</span><span class=o>=</span><span class=s2>&#34;utf-8&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nb>input</span><span class=p>(</span><span class=s2>&#34;你很可能不是在cmd命令行下运行，密码输入将不能隐藏:&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>new_char</span> <span class=ow>in</span> <span class=s1>&#39;</span><span class=se>\r\n</span><span class=s1>&#39;</span><span class=p>:</span>  <span class=c1># 如果是换行，则输入结束</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=n>new_char</span> <span class=o>==</span> <span class=s1>&#39;</span><span class=se>\b</span><span class=s1>&#39;</span><span class=p>:</span>  <span class=c1># 如果是退格，则删除密码末尾一位并且删除一个星号</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>chars</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>del</span> <span class=n>chars</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>                <span class=n>msvcrt</span><span class=o>.</span><span class=n>putch</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\b</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>))</span>  <span class=c1># 光标回退一格</span>
+</span></span><span class=line><span class=cl>                <span class=n>msvcrt</span><span class=o>.</span><span class=n>putch</span><span class=p>(</span><span class=s1>&#39; &#39;</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>))</span>  <span class=c1># 输出一个空格覆盖原来的星号</span>
+</span></span><span class=line><span class=cl>                <span class=n>msvcrt</span><span class=o>.</span><span class=n>putch</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\b</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>))</span>  <span class=c1># 光标回退一格准备接受新的输入</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>chars</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>new_char</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>msvcrt</span><span class=o>.</span><span class=n>putch</span><span class=p>(</span><span class=s1>&#39;*&#39;</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>))</span>  <span class=c1># 显示为星号</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>chars</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>check_sms</span><span class=p>(</span><span class=n>host</span><span class=p>,</span> <span class=n>user_id</span><span class=p>,</span> <span class=n>cookie</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>conn</span> <span class=o>=</span> <span class=n>http</span><span class=o>.</span><span class=n>client</span><span class=o>.</span><span class=n>HTTPConnection</span><span class=p>(</span><span class=n>host</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>headers</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;user-agent&#39;</span><span class=p>:</span> <span class=s2>&#34;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept&#39;</span><span class=p>:</span> <span class=s2>&#34;*/*&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept-encoding&#39;</span><span class=p>:</span> <span class=s2>&#34;gzip, deflate, sdch&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;accept-language&#39;</span><span class=p>:</span> <span class=s2>&#34;zh-CN,zh;q=0.8&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;cookie&#39;</span><span class=p>:</span> <span class=n>cookie</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>conn</span><span class=o>.</span><span class=n>request</span><span class=p>(</span><span class=s2>&#34;GET&#34;</span><span class=p>,</span> <span class=s2>&#34;/attachment/new_sms/</span><span class=si>{}</span><span class=s2>.sms?now=</span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>user_id</span><span class=p>,</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()),</span> <span class=n>headers</span><span class=o>=</span><span class=n>headers</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>except</span> <span class=ne>ConnectionRefusedError</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;查询动作被服务器拒绝&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;0&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>except</span> <span class=ne>TimeoutError</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;服务器超时&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s2>&#34;0&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>getresponse</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=n>res</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>data</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s2>&#34;gb2312&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>read_settings</span><span class=p>(</span><span class=n>mail</span><span class=p>,</span> <span class=n>ck</span><span class=p>,</span> <span class=n>cf</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span> <span class=o>=</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s2>&#34;请输入你的邮箱地址: &#34;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;send_to&#34;</span><span class=p>,</span> <span class=n>mail</span><span class=o>.</span><span class=n>send_to</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;host&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>url</span> <span class=o>=</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;host&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>url</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;请输入OA地址(不要带&#34;http://:&#34;): &#39;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;host&#34;</span><span class=p>,</span> <span class=n>ck</span><span class=o>.</span><span class=n>url</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;username&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>username</span> <span class=o>=</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;username&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>username</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;请输入OA用户名: &#39;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;username&#34;</span><span class=p>,</span> <span class=n>ck</span><span class=o>.</span><span class=n>username</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=n>base64</span><span class=o>.</span><span class=n>b64decode</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>cf</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>),</span> <span class=s1>&#39;utf8&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf8&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;请输入OA密码: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>password</span> <span class=o>=</span> <span class=n>pwd_input</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>,</span> <span class=n>base64</span><span class=o>.</span><span class=n>b64encode</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>password</span><span class=p>,</span> <span class=s1>&#39;utf8&#39;</span><span class=p>))</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf8&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=nb>open</span><span class=p>(</span><span class=n>conf_file</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span> <span class=o>=</span> <span class=n>configparser</span><span class=o>.</span><span class=n>ConfigParser</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>cf</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>conf_file</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mail</span> <span class=o>=</span> <span class=n>Mail</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>ck</span> <span class=o>=</span> <span class=n>Cookies</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>read_settings</span><span class=p>(</span><span class=n>mail</span><span class=p>,</span> <span class=n>ck</span><span class=p>,</span> <span class=n>cf</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mail</span><span class=o>.</span><span class=n>host</span> <span class=o>=</span> <span class=n>ck</span><span class=o>.</span><span class=n>url</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>ck</span><span class=o>.</span><span class=n>get</span><span class=p>()</span>  <span class=c1># 获取登录信息</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>ck</span><span class=o>.</span><span class=n>status</span> <span class=o>==</span> <span class=s2>&#34;302&#34;</span><span class=p>:</span>  <span class=c1># 登录成功获得的正确响应</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;用户名或密码有误, 请重新输入&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=c1># 登录失败, 清空用户名/密码, 并要求充填</span>
+</span></span><span class=line><span class=cl>            <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;username&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>cf</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;main&#34;</span><span class=p>,</span> <span class=s2>&#34;password&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>read_settings</span><span class=p>(</span><span class=n>mail</span><span class=p>,</span> <span class=n>ck</span><span class=p>,</span> <span class=n>cf</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>cookie</span> <span class=o>=</span> <span class=s1>&#39;; &#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>cookies</span><span class=p>)</span>  <span class=c1># 拼接cookie</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;开始检测, 将此窗口最小化即可&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>check_sms</span><span class=p>(</span><span class=n>ck</span><span class=o>.</span><span class=n>url</span><span class=p>,</span> <span class=n>ck</span><span class=o>.</span><span class=n>user_id</span><span class=p>,</span> <span class=n>cookie</span><span class=p>)</span> <span class=o>!=</span> <span class=s2>&#34;0&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>mail</span><span class=o>.</span><span class=n>send</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>mail</span><span class=o>.</span><span class=n>is_send</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>            <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=mi>60</span><span class=p>)</span>  <span class=c1># sleep 5min</span>
+</span></span><span class=line><span class=cl>    <span class=k>except</span> <span class=ne>KeyboardInterrupt</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;检测到按键中断, 程序将退出&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>conf_file</span> <span class=o>=</span> <span class=s2>&#34;oa_check.ini&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>conf_info</span> <span class=o>=</span> <span class=s2>&#34;&#34;&#34;[main]
+</span></span></span><span class=line><span class=cl><span class=s2>; OA网址, 注意不需要开头的http://哦
+</span></span></span><span class=line><span class=cl><span class=s2>host = xxx.com
+</span></span></span><span class=line><span class=cl><span class=s2>username =
+</span></span></span><span class=line><span class=cl><span class=s2>password =
+</span></span></span><span class=line><span class=cl><span class=s2>; 你要接收提醒的邮箱, 如qq邮箱 hello@qq.com
+</span></span></span><span class=line><span class=cl><span class=s2>send_to =
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>exists</span><span class=p>(</span><span class=n>conf_file</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>conf_file</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>fh</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>fh</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>conf_info</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2> _______________
+</span></span></span><span class=line><span class=cl><span class=s2>&lt; OA消息提醒工具 &gt;
+</span></span></span><span class=line><span class=cl><span class=s2> ---------------
+</span></span></span><span class=line><span class=cl><span class=s2>        \   ^__^
+</span></span></span><span class=line><span class=cl><span class=s2>         \  (oo)\_______
+</span></span></span><span class=line><span class=cl><span class=s2>            (__)\       )\/</span><span class=se>\\</span><span class=s2>-
+</span></span></span><span class=line><span class=cl><span class=s2>                ||----w |
+</span></span></span><span class=line><span class=cl><span class=s2>                ||     ||&#34;&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>{}</span><span class=s2>  by ferstar&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\t</span><span class=s2>&#34;</span> <span class=o>*</span> <span class=mi>3</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;设置好邮箱/用户名/密码后, 如果OA系统有新通知时&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;你设置的邮箱会收到一封来自xxx@126.com的邮件提醒&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div></div></div></article><div class=related-posts><h2 class=related-title>相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6.0-12-5.4-12-12v-92h-92c-6.6.0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6.0 12 5.4 12 12v92h92c6.6.0 12 5.4 12 12v56z"/></svg></h2><ul class=related-list><li class=related-item><a href=/post/python%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7pyinstaller%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/ class=related-link>Python打包工具Pyinstaller使用记录</a></li><li class=related-item><a href=/post/%E7%94%A8-openpyxl-%E5%A4%84%E7%90%86-xlsx-%E6%96%87%E4%BB%B6/ class=related-link>用 openpyxl 处理 xlsx 文件</a></li><li class=related-item><a href=/post/windows%E8%B7%AF%E7%94%B1%E8%A1%A8%E9%85%8D%E7%BD%AE_%E5%8F%8C%E7%BD%91%E5%8D%A1%E5%90%8C%E6%97%B6%E4%B8%8A%E5%85%AC%E5%8F%B8%E5%86%85%E5%A4%96%E7%BD%91/ class=related-link>Windows路由表配置_双网卡同时上公司内外网</a></li><li class=related-item><a href=/post/x220%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E8%AE%B0%E5%BD%95/ class=related-link>x220安装黑苹果记录</a></li><li class=related-item><a href=/post/x220%E6%94%B9%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8win10%E7%9A%84%E9%97%AE%E9%A2%98/ class=related-link>x220改装后使用win10的问题</a></li></ul></div><footer class=minimal-footer><div class=post-tag><a href=/tags/others/ rel=tag class=post-tag-link>#others</a></div><div class=post-category><a href=/post/ class="post-category-link active">post</a></div></footer><ul class=post-nav><li class=post-nav-prev><a href=/post/python-3/ rel=prev>&lt; Python 3.x控制台输入密码的方法总结</a></li><li class=post-nav-next><a href=/post/python%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7pyinstaller%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/ rel=next>Python打包工具Pyinstaller使用记录 ></a></li></ul><div class=load-comments><div id=load-comments>加载评论</div></div><div id=utterances></div></div></main><div id=back-to-top class=back-to-top><a href=#><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6.0-33.9L207 39c9.4-9.4 24.6-9.4 33.9.0l194.3 194.3c9.4 9.4 9.4 24.6.0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3.0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a></div><footer id=footer class=footer><div class=footer-inner><div class=site-info>©&nbsp;2013–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3.0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;ferstar</div><div class=powered-by>Powered by <a href=https://github.com/gohugoio/hugo target=_blank rel=noopener>Hugo</a> | Theme is <a href=https://github.com/reuixiy/hugo-theme-meme target=_blank rel=noopener>MemE</a></div><div class=custom-footer>👀<a href=/>闲谈莫论人非静坐常思己过</a>👀</div></div></footer></div><script>function loadComments(){(function(){const t=document.getElementById("utterances");if(!t)return;const e=document.createElement("script");e.src="https://utteranc.es/client.js",e.async=!0,e.crossOrigin="anonymous",e.setAttribute("repo","ferstar/ferstar.github.io"),e.setAttribute("issue-term","pathname");const n=getCurrentTheme()==="dark";n?e.setAttribute("theme","photon-dark"):e.setAttribute("theme","github-light"),e.setAttribute("label","Comment"),t.appendChild(e)})()}</script><script src=https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js></script>
+<script>let imgNodes=document.querySelectorAll("div.post-body img");imgNodes=Array.from(imgNodes).filter(e=>e.parentNode.tagName!=="A"),mediumZoom(imgNodes,{background:"hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)"})</script><script src=https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js type=module defer></script></body></html>
